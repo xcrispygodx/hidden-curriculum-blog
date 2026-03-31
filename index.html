@@ -5,735 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THE HIDDEN CURRICULUM — What They Don't Teach You</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #111118;
-            --bg-card: #16161f;
-            --text-primary: #c8c8d0;
-            --text-dim: #6a6a7a;
-            --text-bright: #e8e8f0;
-            --accent-gold: #c9a84c;
-            --accent-gold-dim: #8a6e2f;
-            --accent-red: #8b2020;
-            --accent-green: #2a6a3a;
-            --border-color: #222233;
-            --glow-gold: rgba(201, 168, 76, 0.15);
-            --glow-red: rgba(139, 32, 32, 0.2);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Crimson Text', Georgia, serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.8;
-            font-size: 18px;
-            overflow-x: hidden;
-        }
-
-        ::selection {
-            background: var(--accent-gold);
-            color: var(--bg-primary);
-        }
-
-        /* ===== BACKGROUND SIGIL ===== */
-        .bg-sigil {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 800px;
-            height: 800px;
-            opacity: 0.02;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .bg-sigil svg {
-            width: 100%;
-            height: 100%;
-            animation: rotate-slow 120s linear infinite;
-        }
-
-        @keyframes rotate-slow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* ===== SCANLINE OVERLAY ===== */
-        .scanlines {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(0, 0, 0, 0.03) 2px,
-                rgba(0, 0, 0, 0.03) 4px
-            );
-        }
-
-        /* ===== HEADER ===== */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(10, 10, 15, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
-            padding: 0;
-        }
-
-        .header-top {
-            text-align: center;
-            padding: 24px 20px 8px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .header-symbol {
-            font-size: 2rem;
-            color: var(--accent-gold);
-            display: block;
-            margin-bottom: 8px;
-            letter-spacing: 12px;
-        }
-
-        .site-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.4rem;
-            font-weight: 900;
-            color: var(--accent-gold);
-            letter-spacing: 8px;
-            text-transform: uppercase;
-            text-shadow: 0 0 40px rgba(201, 168, 76, 0.3);
-        }
-
-        .site-subtitle {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            margin-top: 4px;
-        }
-
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 0;
-            padding: 0;
-            background: var(--bg-secondary);
-        }
-
-        nav a {
-            font-family: 'Cinzel', serif;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--text-dim);
-            text-decoration: none;
-            padding: 14px 28px;
-            transition: all 0.3s ease;
-            border-bottom: 2px solid transparent;
-            position: relative;
-        }
-
-        nav a:hover,
-        nav a.active {
-            color: var(--accent-gold);
-            background: var(--glow-gold);
-            border-bottom-color: var(--accent-gold);
-        }
-
-        nav a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 1px;
-            background: var(--accent-gold);
-            transition: width 0.3s ease;
-        }
-
-        nav a:hover::before {
-            width: 80%;
-        }
-
-        /* ===== HERO ===== */
-        .hero {
-            text-align: center;
-            padding: 80px 20px 60px;
-            position: relative;
-            background: radial-gradient(ellipse at center, rgba(201, 168, 76, 0.05) 0%, transparent 70%);
-        }
-
-        .hero-eye {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 30px;
-            opacity: 0.6;
-        }
-
-        .hero-eye svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .hero h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 3rem;
-            font-weight: 900;
-            color: var(--text-bright);
-            letter-spacing: 4px;
-            margin-bottom: 16px;
-            text-shadow: 0 0 60px rgba(201, 168, 76, 0.2);
-        }
-
-        .hero h1 .highlight {
-            color: var(--accent-gold);
-        }
-
-        .hero p {
-            max-width: 700px;
-            margin: 0 auto;
-            font-size: 1.15rem;
-            color: var(--text-dim);
-            font-style: italic;
-        }
-
-        .hero-divider {
-            width: 200px;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--accent-gold), transparent);
-            margin: 30px auto;
-        }
-
-        .hero-quote {
-            font-family: 'Cinzel', serif;
-            font-size: 0.85rem;
-            color: var(--accent-gold-dim);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* ===== TICKER ===== */
-        .ticker-wrap {
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-            overflow: hidden;
-            padding: 10px 0;
-        }
-
-        .ticker {
-            display: flex;
-            animation: ticker-scroll 40s linear infinite;
-            white-space: nowrap;
-        }
-
-        .ticker span {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.72rem;
-            color: var(--accent-gold-dim);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            padding: 0 40px;
-        }
-
-        .ticker span::after {
-            content: ' \25C6';
-            margin-left: 40px;
-            color: var(--accent-red);
-        }
-
-        @keyframes ticker-scroll {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
-        }
-
-        /* ===== CONTAINER ===== */
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* ===== SECTION HEADERS ===== */
-        .section-header {
-            text-align: center;
-            padding: 60px 0 40px;
-        }
-
-        .section-header h2 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--accent-gold);
-            letter-spacing: 6px;
-            text-transform: uppercase;
-        }
-
-        .section-header .section-line {
-            width: 60px;
-            height: 1px;
-            background: var(--accent-gold);
-            margin: 12px auto;
-        }
-
-        .section-header p {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
-        /* ===== FEATURED GRID ===== */
-        .featured-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-bottom: 60px;
-        }
-
-        .featured-main {
-            grid-column: 1 / -1;
-        }
-
-        .post-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 2px;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            position: relative;
-        }
-
-        .post-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(to right, transparent, var(--accent-gold), transparent);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .post-card:hover {
-            border-color: var(--accent-gold-dim);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), 0 0 60px var(--glow-gold);
-        }
-
-        .post-card:hover::before {
-            opacity: 1;
-        }
-
-        .post-card-image {
-            width: 100%;
-            height: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .featured-main .post-card-image {
-            height: 350px;
-        }
-
-        .post-card-image .image-symbol {
-            font-size: 4rem;
-            opacity: 0.4;
-            color: #fff;
-            z-index: 2;
-        }
-
-        .post-card-image .image-pattern {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.15;
-        }
-
-        .post-card-body {
-            padding: 24px;
-        }
-
-        .post-tag {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.65rem;
-            color: var(--accent-gold);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            background: rgba(201, 168, 76, 0.1);
-            padding: 4px 10px;
-            display: inline-block;
-            margin-bottom: 12px;
-            border: 1px solid rgba(201, 168, 76, 0.2);
-        }
-
-        .post-tag.red {
-            color: #c44;
-            background: rgba(139, 32, 32, 0.15);
-            border-color: rgba(139, 32, 32, 0.3);
-        }
-
-        .post-card-title {
-            font-family: 'Cinzel', serif;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-bright);
-            margin-bottom: 12px;
-            line-height: 1.4;
-        }
-
-        .featured-main .post-card-title {
-            font-size: 1.6rem;
-        }
-
-        .post-card-title a {
-            color: inherit;
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .post-card-title a:hover {
-            color: var(--accent-gold);
-        }
-
-        .post-card-excerpt {
-            color: var(--text-dim);
-            margin-bottom: 16px;
-            line-height: 1.7;
-        }
-
-        .post-card-meta {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.65rem;
-            color: var(--text-dim);
-            letter-spacing: 1px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid var(--border-color);
-            padding-top: 12px;
-        }
-
-        .read-more {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--accent-gold);
-            text-decoration: none;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: all 0.2s;
-        }
-
-        .read-more:hover {
-            text-shadow: 0 0 10px rgba(201, 168, 76, 0.5);
-        }
-
-        /* ===== LATEST DECODES ===== */
-        .decodes-list {
-            margin-bottom: 60px;
-        }
-
-        .decode-item {
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            gap: 20px;
-            align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-        }
-
-        .decode-item:hover {
-            background: rgba(201, 168, 76, 0.02);
-            padding-left: 12px;
-        }
-
-        .decode-number {
-            font-family: 'Cinzel', serif;
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--accent-gold-dim);
-            width: 60px;
-            text-align: center;
-        }
-
-        .decode-content h3 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        .decode-content h3 a {
-            color: var(--text-bright);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .decode-content h3 a:hover {
-            color: var(--accent-gold);
-        }
-
-        .decode-content p {
-            color: var(--text-dim);
-            font-size: 0.95rem;
-        }
-
-        .decode-meta {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.65rem;
-            color: var(--text-dim);
-            letter-spacing: 1px;
-            text-align: right;
-            white-space: nowrap;
-        }
-
-        /* ===== SIDEBAR WIDGET ===== */
-        .two-col {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 40px;
-            margin-bottom: 60px;
-        }
-
-        .widget {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 24px;
-            margin-bottom: 24px;
-        }
-
-        .widget-title {
-            font-family: 'Cinzel', serif;
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--accent-gold);
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .widget p {
-            font-size: 0.92rem;
-            color: var(--text-dim);
-        }
-
-        .widget ul {
-            list-style: none;
-        }
-
-        .widget ul li {
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(34, 34, 51, 0.5);
-        }
-
-        .widget ul li:last-child {
-            border-bottom: none;
-        }
-
-        .widget ul li a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-size: 0.92rem;
-            transition: color 0.2s;
-        }
-
-        .widget ul li a:hover {
-            color: var(--accent-gold);
-        }
-
-        .widget ul li span {
-            display: block;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.6rem;
-            color: var(--text-dim);
-            letter-spacing: 1px;
-            margin-top: 2px;
-        }
-
-        .tag-cloud {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .tag-cloud a {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.68rem;
-            color: var(--text-dim);
-            border: 1px solid var(--border-color);
-            padding: 4px 10px;
-            text-decoration: none;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transition: all 0.2s;
-        }
-
-        .tag-cloud a:hover {
-            border-color: var(--accent-gold);
-            color: var(--accent-gold);
-            background: rgba(201, 168, 76, 0.05);
-        }
-
-        /* ===== MANIFESTO BANNER ===== */
-        .manifesto {
-            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
-            border: 1px solid var(--border-color);
-            border-left: 3px solid var(--accent-gold);
-            padding: 40px;
-            margin: 40px 0 60px;
-            position: relative;
-        }
-
-        .manifesto::before {
-            content: '\201C';
-            font-family: 'Cinzel', serif;
-            font-size: 6rem;
-            color: var(--accent-gold-dim);
-            position: absolute;
-            top: -10px;
-            left: 20px;
-            opacity: 0.3;
-        }
-
-        .manifesto blockquote {
-            font-size: 1.2rem;
-            font-style: italic;
-            color: var(--text-bright);
-            line-height: 1.8;
-            margin-bottom: 12px;
-        }
-
-        .manifesto cite {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--accent-gold-dim);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-style: normal;
-        }
-
-        /* ===== FOOTER ===== */
-        footer {
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border-color);
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        .footer-symbol {
-            font-size: 1.5rem;
-            color: var(--accent-gold-dim);
-            margin-bottom: 16px;
-            letter-spacing: 8px;
-        }
-
-        .footer-text {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.65rem;
-            color: var(--text-dim);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-        }
-
-        .footer-text a {
-            color: var(--accent-gold-dim);
-            text-decoration: none;
-        }
-
-        .footer-text a:hover {
-            color: var(--accent-gold);
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .site-title {
-                font-size: 1.6rem;
-                letter-spacing: 4px;
-            }
-
-            nav {
-                flex-wrap: wrap;
-            }
-
-            nav a {
-                padding: 10px 16px;
-                font-size: 0.65rem;
-            }
-
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-
-            .featured-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .two-col {
-                grid-template-columns: 1fr;
-            }
-
-            .decode-item {
-                grid-template-columns: 1fr;
-                gap: 8px;
-            }
-
-            .decode-number {
-                display: none;
-            }
-
-            .decode-meta {
-                text-align: left;
-            }
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <div class="scanlines"></div>
 
-<!-- Background Sigil -->
 <div class="bg-sigil">
     <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="200" cy="200" r="180" stroke="#c9a84c" stroke-width="0.5"/>
-        <circle cx="200" cy="200" r="140" stroke="#c9a84c" stroke-width="0.5"/>
-        <circle cx="200" cy="200" r="100" stroke="#c9a84c" stroke-width="0.5"/>
-        <circle cx="200" cy="200" r="60" stroke="#c9a84c" stroke-width="0.5"/>
-        <polygon points="200,20 380,200 200,380 20,200" stroke="#c9a84c" stroke-width="0.5" fill="none"/>
-        <polygon points="200,50 350,200 200,350 50,200" stroke="#c9a84c" stroke-width="0.3" fill="none"/>
-        <line x1="200" y1="0" x2="200" y2="400" stroke="#c9a84c" stroke-width="0.3"/>
-        <line x1="0" y1="200" x2="400" y2="200" stroke="#c9a84c" stroke-width="0.3"/>
-        <line x1="60" y1="60" x2="340" y2="340" stroke="#c9a84c" stroke-width="0.3"/>
-        <line x1="340" y1="60" x2="60" y2="340" stroke="#c9a84c" stroke-width="0.3"/>
+        <circle cx="200" cy="200" r="180" stroke="#00d4ff" stroke-width="0.5"/>
+        <circle cx="200" cy="200" r="140" stroke="#00d4ff" stroke-width="0.5"/>
+        <circle cx="200" cy="200" r="100" stroke="#00d4ff" stroke-width="0.5"/>
+        <circle cx="200" cy="200" r="60" stroke="#00d4ff" stroke-width="0.5"/>
+        <polygon points="200,20 380,200 200,380 20,200" stroke="#00d4ff" stroke-width="0.5" fill="none"/>
+        <polygon points="200,50 350,200 200,350 50,200" stroke="#00d4ff" stroke-width="0.3" fill="none"/>
+        <line x1="200" y1="0" x2="200" y2="400" stroke="#00d4ff" stroke-width="0.3"/>
+        <line x1="0" y1="200" x2="400" y2="200" stroke="#00d4ff" stroke-width="0.3"/>
+        <line x1="60" y1="60" x2="340" y2="340" stroke="#00d4ff" stroke-width="0.3"/>
+        <line x1="340" y1="60" x2="60" y2="340" stroke="#00d4ff" stroke-width="0.3"/>
     </svg>
 </div>
 
@@ -752,7 +43,6 @@
     </nav>
 </header>
 
-<!-- Ticker -->
 <div class="ticker-wrap">
     <div class="ticker">
         <span>They removed the aether in 1905</span>
@@ -774,15 +64,14 @@
     </div>
 </div>
 
-<!-- Hero -->
-<section class="hero">
+<section class="hero fade-in">
     <div class="hero-eye">
         <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <polygon points="50,10 90,50 50,90 10,50" stroke="#c9a84c" stroke-width="1.5" fill="none"/>
-            <circle cx="50" cy="50" r="20" stroke="#c9a84c" stroke-width="1" fill="none"/>
-            <circle cx="50" cy="50" r="8" fill="#c9a84c" opacity="0.5"/>
-            <line x1="50" y1="5" x2="50" y2="95" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
-            <line x1="5" y1="50" x2="95" y2="50" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
+            <polygon points="50,10 90,50 50,90 10,50" stroke="#00d4ff" stroke-width="1.5" fill="none"/>
+            <circle cx="50" cy="50" r="20" stroke="#00d4ff" stroke-width="1" fill="none"/>
+            <circle cx="50" cy="50" r="8" fill="#00d4ff" opacity="0.5"/>
+            <line x1="50" y1="5" x2="50" y2="95" stroke="#00d4ff" stroke-width="0.5" opacity="0.3"/>
+            <line x1="5" y1="50" x2="95" y2="50" stroke="#00d4ff" stroke-width="0.5" opacity="0.3"/>
         </svg>
     </div>
     <h1>The <span class="highlight">Education System</span> Is<br>A Controlled Narrative</h1>
@@ -793,29 +82,28 @@
 
 <div class="container">
 
-    <!-- Featured Posts -->
-    <div class="section-header">
+    <div class="section-header fade-in">
         <h2>&#9670; Classified Transmissions &#9670;</h2>
         <div class="section-line"></div>
         <p>Recent decodes from the hidden curriculum</p>
     </div>
 
     <div class="featured-grid">
-        <div class="featured-main">
+        <div class="featured-main fade-in">
             <article class="post-card">
-                <div class="post-card-image" style="background: linear-gradient(135deg, #1a0a2e, #0d1117, #1a0a0a);">
+                <div class="post-card-image" style="background: linear-gradient(135deg, #0a0520, #070b14, #140a0a);">
                     <svg class="image-pattern" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="200" cy="150" r="120" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
-                        <circle cx="200" cy="150" r="80" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
-                        <circle cx="200" cy="150" r="40" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
-                        <polygon points="200,30 320,150 200,270 80,150" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.2"/>
+                        <circle cx="200" cy="150" r="120" stroke="#00d4ff" stroke-width="0.5" opacity="0.3"/>
+                        <circle cx="200" cy="150" r="80" stroke="#00d4ff" stroke-width="0.5" opacity="0.3"/>
+                        <circle cx="200" cy="150" r="40" stroke="#00d4ff" stroke-width="0.5" opacity="0.3"/>
+                        <polygon points="200,30 320,150 200,270 80,150" stroke="#00d4ff" stroke-width="0.5" fill="none" opacity="0.2"/>
                     </svg>
                     <span class="image-symbol">&#9670;</span>
                 </div>
                 <div class="post-card-body">
                     <span class="post-tag red">Classified</span>
                     <h2 class="post-card-title"><a href="aether-erased.html">How the Aether Was Erased From Physics: The Rockefeller Influence on Education</a></h2>
-                    <p class="post-card-excerpt">There was a time when every serious physicist accepted the existence of the aether — a medium filling all space, the substrate upon which electromagnetic waves propagated. Then, in a coordinated campaign spanning decades, it was systematically removed from textbooks, curricula, and scientific discourse. This is the story of how a concept that powered the greatest discoveries in physics was memory-holed by institutional power.</p>
+                    <p class="post-card-excerpt">There was a time when every serious physicist accepted the existence of the aether — a medium filling all space, the substrate upon which electromagnetic waves propagated. Then, in a coordinated campaign spanning decades, it was systematically removed from textbooks, curricula, and scientific discourse.</p>
                     <div class="post-card-meta">
                         <span>CLASSIFIED DOCUMENT &bull; 12 MIN READ</span>
                         <a href="aether-erased.html" class="read-more">Decode &rarr;</a>
@@ -824,14 +112,14 @@
             </article>
         </div>
 
-        <article class="post-card">
-            <div class="post-card-image" style="background: linear-gradient(135deg, #1a1a00, #0d1117, #001a1a);">
+        <article class="post-card fade-in">
+            <div class="post-card-image" style="background: linear-gradient(135deg, #0a0f00, #070b14, #000f0f);">
                 <svg class="image-pattern" viewBox="0 0 400 250" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M 200 25 Q 250 125 200 225 Q 150 125 200 25" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.3"/>
-                            <path d="M 100 125 Q 200 25 300 125 Q 200 225 100 125" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.3"/>
-                        </svg>
-            <span class="image-symbol">&#9889;</span>
-        </div>
+                    <path d="M 200 25 Q 250 125 200 225 Q 150 125 200 25" stroke="#00d4ff" stroke-width="0.5" fill="none" opacity="0.3"/>
+                    <path d="M 100 125 Q 200 25 300 125 Q 200 225 100 125" stroke="#00d4ff" stroke-width="0.5" fill="none" opacity="0.3"/>
+                </svg>
+                <span class="image-symbol">&#9889;</span>
+            </div>
             <div class="post-card-body">
                 <span class="post-tag">Suppressed Tech</span>
                 <h2 class="post-card-title"><a href="tesla-suppressed.html">Tesla's Forbidden Physics: The Inventions They Buried</a></h2>
@@ -843,14 +131,14 @@
             </div>
         </article>
 
-        <article class="post-card">
-            <div class="post-card-image" style="background: linear-gradient(135deg, #0a1a0a, #0d1117, #1a0a1a);">
+        <article class="post-card fade-in">
+            <div class="post-card-image" style="background: linear-gradient(135deg, #050f05, #070b14, #0f0510);">
                 <svg class="image-pattern" viewBox="0 0 400 250" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="200" cy="125" r="100" stroke="#c9a84c" stroke-width="0.3" opacity="0.3"/>
-                    <circle cx="200" cy="125" r="60" stroke="#c9a84c" stroke-width="0.3" opacity="0.3"/>
-                    <circle cx="200" cy="125" r="20" stroke="#c9a84c" stroke-width="0.3" opacity="0.3"/>
-                    <ellipse cx="200" cy="125" rx="100" ry="40" stroke="#c9a84c" stroke-width="0.3" fill="none" opacity="0.3"/>
-                    <ellipse cx="200" cy="125" rx="40" ry="100" stroke="#c9a84c" stroke-width="0.3" fill="none" opacity="0.3"/>
+                    <circle cx="200" cy="125" r="100" stroke="#7b5cff" stroke-width="0.3" opacity="0.3"/>
+                    <circle cx="200" cy="125" r="60" stroke="#7b5cff" stroke-width="0.3" opacity="0.3"/>
+                    <circle cx="200" cy="125" r="20" stroke="#7b5cff" stroke-width="0.3" opacity="0.3"/>
+                    <ellipse cx="200" cy="125" rx="100" ry="40" stroke="#7b5cff" stroke-width="0.3" fill="none" opacity="0.3"/>
+                    <ellipse cx="200" cy="125" rx="40" ry="100" stroke="#7b5cff" stroke-width="0.3" fill="none" opacity="0.3"/>
                 </svg>
                 <span class="image-symbol">&#8734;</span>
             </div>
@@ -866,7 +154,6 @@
         </article>
     </div>
 
-    <!-- Two Column Layout -->
     <div class="two-col">
         <div>
             <div class="section-header" style="text-align:left; padding-top:0;">
@@ -875,8 +162,17 @@
             </div>
 
             <div class="decodes-list">
-                <div class="decode-item">
+                <div class="decode-item fade-in">
                     <div class="decode-number">01</div>
+                    <div class="decode-content">
+                        <h3><a href="academic-stagnation.html">The Controlled Stagnation: Why Math and Physics Stopped Moving</a></h3>
+                        <p>How Epstein's network, Weinstein's "anti-woke" math initiative, and classified research created a dual-track system that froze public-facing science.</p>
+                    </div>
+                    <div class="decode-meta">NEW<br>APR 2026</div>
+                </div>
+
+                <div class="decode-item fade-in">
+                    <div class="decode-number">02</div>
                     <div class="decode-content">
                         <h3><a href="education-deception.html">The Prussian Model: Education Was Never About Learning</a></h3>
                         <p>How the compulsory education system was imported from Prussia — not to create thinkers, but to manufacture obedient soldiers and workers.</p>
@@ -884,8 +180,8 @@
                     <div class="decode-meta">EDUCATION<br>MAR 2026</div>
                 </div>
 
-                <div class="decode-item">
-                    <div class="decode-number">02</div>
+                <div class="decode-item fade-in">
+                    <div class="decode-number">03</div>
                     <div class="decode-content">
                         <h3><a href="forbidden-knowledge.html">Walter Russell's Periodic Table: Predicting the Undiscovered</a></h3>
                         <p>Russell restructured the periodic table as a spiral of octaves, correctly predicting isotopes and transmutations decades before mainstream science.</p>
@@ -893,8 +189,8 @@
                     <div class="decode-meta">FORBIDDEN<br>MAR 2026</div>
                 </div>
 
-                <div class="decode-item">
-                    <div class="decode-number">03</div>
+                <div class="decode-item fade-in">
+                    <div class="decode-number">04</div>
                     <div class="decode-content">
                         <h3><a href="hidden-physics.html">Scalar Waves: The Physics Erased From Maxwell's Equations</a></h3>
                         <p>James Clerk Maxwell's original quaternion equations contained longitudinal scalar waves. Heaviside simplified them — and the most important physics was lost.</p>
@@ -902,45 +198,37 @@
                     <div class="decode-meta">PHYSICS<br>FEB 2026</div>
                 </div>
 
-                <div class="decode-item">
-                    <div class="decode-number">04</div>
+                <div class="decode-item fade-in">
+                    <div class="decode-number">05</div>
                     <div class="decode-content">
                         <h3><a href="hidden-physics.html">The Rodin Coil: Toroidal Energy You Were Never Taught</a></h3>
                         <p>A wound coil following vortex mathematics produces anomalous energy gains. The geometry mimics the toroidal field of every electron in the universe.</p>
                     </div>
                     <div class="decode-meta">TECH<br>FEB 2026</div>
                 </div>
-
-                <div class="decode-item">
-                    <div class="decode-number">05</div>
-                    <div class="decode-content">
-                        <h3><a href="education-deception.html">Rockefeller's General Education Board: The Letter That Exposes Everything</a></h3>
-                        <p>"We shall not try to make these people or any of their children into philosophers or men of learning..." — From the General Education Board's 1913 Occasional Letter.</p>
-                    </div>
-                    <div class="decode-meta">CLASSIFIED<br>FEB 2026</div>
-                </div>
             </div>
         </div>
 
         <aside>
-            <div class="widget">
+            <div class="widget fade-in-right">
                 <div class="widget-title">Declassified</div>
                 <p>Welcome to The Hidden Curriculum. This archive decodes the suppressed physics and corrupted education systems designed to keep humanity in the dark. Every article is a thread pulled from the tapestry of lies woven by institutional power.</p>
-                <p style="margin-top: 12px; color: var(--accent-gold-dim); font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; letter-spacing: 2px;">QUESTION EVERYTHING. VERIFY INDEPENDENTLY.</p>
+                <p style="margin-top: 12px; color: var(--accent-cyan-dim); font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; letter-spacing: 2px;">QUESTION EVERYTHING. VERIFY INDEPENDENTLY.</p>
             </div>
 
-            <div class="widget">
+            <div class="widget fade-in-right">
                 <div class="widget-title">Categories</div>
                 <ul>
                     <li><a href="hidden-physics.html">Hidden Physics <span>8 transmissions</span></a></li>
                     <li><a href="education-deception.html">Education Deception <span>5 transmissions</span></a></li>
                     <li><a href="forbidden-knowledge.html">Forbidden Knowledge <span>6 transmissions</span></a></li>
                     <li><a href="vortex-math.html">Vortex Mathematics <span>3 transmissions</span></a></li>
+                    <li><a href="academic-stagnation.html">Academic Control <span>1 transmission</span></a></li>
                     <li><a href="resources.html">Archives &amp; Resources <span>External links</span></a></li>
                 </ul>
             </div>
 
-            <div class="widget">
+            <div class="widget fade-in-right">
                 <div class="widget-title">Key Figures</div>
                 <ul>
                     <li><a href="tesla-suppressed.html">Nikola Tesla</a></li>
@@ -952,7 +240,7 @@
                 </ul>
             </div>
 
-            <div class="widget">
+            <div class="widget fade-in-right">
                 <div class="widget-title">Tags</div>
                 <div class="tag-cloud">
                     <a href="aether-erased.html">Aether</a>
@@ -963,15 +251,14 @@
                     <a href="forbidden-knowledge.html">Sacred Geometry</a>
                     <a href="hidden-physics.html">Free Energy</a>
                     <a href="education-deception.html">Rockefeller</a>
-                    <a href="forbidden-knowledge.html">Toroidal Field</a>
-                    <a href="hidden-physics.html">Maxwell</a>
+                    <a href="academic-stagnation.html">Epstein</a>
+                    <a href="academic-stagnation.html">Harvard</a>
                 </div>
             </div>
         </aside>
     </div>
 
-    <!-- Manifesto -->
-    <div class="manifesto">
+    <div class="manifesto fade-in">
         <blockquote>
             "In the councils of government, we must guard against the acquisition of unwarranted influence, whether sought or unsought, by the military-industrial complex. The potential for the disastrous rise of misplaced power exists and will persist."
         </blockquote>
@@ -986,6 +273,21 @@
     <div class="footer-text">"Seek and ye shall find. Knock and the door shall be opened."</div>
     <div class="footer-text" style="margin-top: 12px;"><a href="index.html">Home</a> &bull; <a href="hidden-physics.html">Hidden Physics</a> &bull; <a href="education-deception.html">The Deception</a> &bull; <a href="forbidden-knowledge.html">Forbidden Knowledge</a> &bull; <a href="resources.html">Archives</a></div>
 </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => {
+        observer.observe(el);
+    });
+});
+</script>
 
 </body>
 </html>

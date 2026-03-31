@@ -5,55 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THE MAXWELL-EPSTEIN WEB — The Hidden Curriculum</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <style>
-        :root { --bg-primary: #0a0a0f; --bg-secondary: #111118; --bg-card: #16161f; --text-primary: #c8c8d0; --text-dim: #6a6a7a; --text-bright: #e8e8f0; --accent-gold: #c9a84c; --accent-gold-dim: #8a6e2f; --accent-red: #8b2020; --border-color: #222233; --glow-gold: rgba(201,168,76,0.15); }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Crimson Text', Georgia, serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.8; font-size: 18px; }
-        ::selection { background: var(--accent-gold); color: var(--bg-primary); }
-        .scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px); }
-        header { position: sticky; top: 0; z-index: 100; background: rgba(10,10,15,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); }
-        .header-top { text-align: center; padding: 24px 20px 8px; border-bottom: 1px solid var(--border-color); }
-        .header-symbol { font-size: 2rem; color: var(--accent-gold); display: block; margin-bottom: 8px; letter-spacing: 12px; }
-        .site-title { font-family: 'Cinzel', serif; font-size: 2.4rem; font-weight: 900; color: var(--accent-gold); letter-spacing: 8px; text-transform: uppercase; text-shadow: 0 0 40px rgba(201,168,76,0.3); }
-        .site-subtitle { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: var(--text-dim); letter-spacing: 6px; text-transform: uppercase; margin-top: 4px; }
-        nav { display: flex; justify-content: center; background: var(--bg-secondary); }
-        nav a { font-family: 'Cinzel', serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim); text-decoration: none; padding: 14px 28px; transition: all 0.3s ease; border-bottom: 2px solid transparent; }
-        nav a:hover, nav a.active { color: var(--accent-gold); background: var(--glow-gold); border-bottom-color: var(--accent-gold); }
-        .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
-        .article-header { text-align: center; padding: 60px 0 40px; }
-        .article-header .tag { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: #c44; letter-spacing: 3px; text-transform: uppercase; background: rgba(139,32,32,0.15); padding: 4px 12px; border: 1px solid rgba(139,32,32,0.3); display: inline-block; margin-bottom: 16px; }
-        .article-header h1 { font-family: 'Cinzel', serif; font-size: 2.2rem; font-weight: 900; color: var(--text-bright); letter-spacing: 3px; margin-bottom: 12px; }
-        .article-header .meta { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--text-dim); letter-spacing: 2px; }
-        .article-body p { margin-bottom: 24px; color: var(--text-primary); }
-        .article-body h2 { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700; color: var(--accent-gold); letter-spacing: 2px; margin: 48px 0 20px; }
-        .article-body h3 { font-family: 'Cinzel', serif; font-size: 1.15rem; font-weight: 700; color: var(--text-bright); margin: 32px 0 12px; }
-        .pull-quote { border-left: 3px solid var(--accent-gold); padding: 20px 24px; margin: 32px 0; background: var(--bg-card); font-style: italic; font-size: 1.1rem; color: var(--text-bright); }
-        .pull-quote cite { display: block; margin-top: 8px; font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--accent-gold-dim); letter-spacing: 2px; text-transform: uppercase; font-style: normal; }
-        .fact-box { background: var(--bg-card); border: 1px solid var(--border-color); border-left: 3px solid var(--accent-red); padding: 24px; margin: 32px 0; }
-        .fact-box h4 { font-family: 'Cinzel', serif; font-size: 0.9rem; color: var(--accent-red); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; }
-        .fact-box ul { list-style: none; padding-left: 0; }
-        .fact-box ul li { padding: 6px 0; color: var(--text-dim); font-size: 0.95rem; }
-        .fact-box ul li::before { content: '\25C6 '; color: var(--accent-red); font-size: 0.7rem; }
-        .data-table { width: 100%; border-collapse: collapse; margin: 24px 0; }
-        .data-table th { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: var(--accent-gold); letter-spacing: 2px; text-transform: uppercase; text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--accent-gold-dim); background: var(--bg-card); }
-        .data-table td { padding: 10px 12px; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; color: var(--text-dim); }
-        .data-table td:first-child { color: var(--text-bright); font-weight: 600; }
-        .article-end { border-top: 1px solid var(--border-color); margin-top: 48px; padding-top: 24px; }
-        .article-end a { color: var(--accent-gold); text-decoration: none; font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; }
-        .article-end a:hover { text-shadow: 0 0 10px rgba(201,168,76,0.5); }
-        footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 40px 20px; text-align: center; }
-        .footer-symbol { font-size: 1.5rem; color: var(--accent-gold-dim); margin-bottom: 16px; letter-spacing: 8px; }
-        .footer-text { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--text-dim); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
-        .footer-text a { color: var(--accent-gold-dim); text-decoration: none; }
-        .footer-text a:hover { color: var(--accent-gold); }
-        @media (max-width: 768px) {
-            .site-title { font-size: 1.6rem; letter-spacing: 4px; }
-            nav { flex-wrap: wrap; }
-            nav a { padding: 10px 16px; font-size: 0.65rem; }
-            .article-header h1 { font-size: 1.5rem; }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="scanlines"></div>
