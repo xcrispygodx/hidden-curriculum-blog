@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE DECEPTION — The Hidden Curriculum</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f; --bg-secondary: #111118; --bg-card: #16161f;
+            --text-primary: #c8c8d0; --text-dim: #6a6a7a; --text-bright: #e8e8f0;
+            --accent-gold: #c9a84c; --accent-gold-dim: #8a6e2f; --accent-red: #8b2020;
+            --border-color: #222233; --glow-gold: rgba(201,168,76,0.15);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Crimson Text', Georgia, serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.8; font-size: 18px; }
+        ::selection { background: var(--accent-gold); color: var(--bg-primary); }
+        .scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px); }
+        header { position: sticky; top: 0; z-index: 100; background: rgba(10,10,15,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); }
+        .header-top { text-align: center; padding: 24px 20px 8px; border-bottom: 1px solid var(--border-color); }
+        .header-symbol { font-size: 2rem; color: var(--accent-gold); display: block; margin-bottom: 8px; letter-spacing: 12px; }
+        .site-title { font-family: 'Cinzel', serif; font-size: 2.4rem; font-weight: 900; color: var(--accent-gold); letter-spacing: 8px; text-transform: uppercase; text-shadow: 0 0 40px rgba(201,168,76,0.3); }
+        .site-subtitle { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: var(--text-dim); letter-spacing: 6px; text-transform: uppercase; margin-top: 4px; }
+        nav { display: flex; justify-content: center; background: var(--bg-secondary); }
+        nav a { font-family: 'Cinzel', serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim); text-decoration: none; padding: 14px 28px; transition: all 0.3s ease; border-bottom: 2px solid transparent; }
+        nav a:hover, nav a.active { color: var(--accent-gold); background: var(--glow-gold); border-bottom-color: var(--accent-gold); }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        .page-header { text-align: center; padding: 60px 0 40px; border-bottom: 1px solid var(--border-color); margin-bottom: 40px; }
+        .page-header h1 { font-family: 'Cinzel', serif; font-size: 2.2rem; font-weight: 900; color: var(--accent-gold); letter-spacing: 6px; text-transform: uppercase; }
+        .page-header .section-line { width: 60px; height: 1px; background: var(--accent-gold); margin: 12px auto; }
+        .page-header p { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: var(--text-dim); letter-spacing: 3px; text-transform: uppercase; }
+        .article-list { margin-bottom: 60px; }
+        .article-card { display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 30px 0; border-bottom: 1px solid var(--border-color); transition: all 0.3s ease; }
+        .article-card:hover { padding-left: 12px; }
+        .article-icon { width: 200px; height: 150px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-color); background: var(--bg-card); font-size: 3rem; color: var(--accent-gold-dim); position: relative; overflow: hidden; }
+        .article-icon svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.1; }
+        .article-body h2 { font-family: 'Cinzel', serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
+        .article-body h2 a { color: var(--text-bright); text-decoration: none; transition: color 0.2s; }
+        .article-body h2 a:hover { color: var(--accent-gold); }
+        .article-body .tag { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--accent-red); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; display: inline-block; }
+        .article-body p { color: var(--text-dim); margin-bottom: 12px; font-size: 0.95rem; }
+        .article-meta { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--text-dim); letter-spacing: 1px; }
+        .article-meta a { color: var(--accent-gold); text-decoration: none; letter-spacing: 2px; text-transform: uppercase; }
+        .article-meta a:hover { text-shadow: 0 0 10px rgba(201,168,76,0.5); }
+        .timeline { margin: 40px 0 60px; }
+        .timeline h2 { font-family: 'Cinzel', serif; font-size: 1.4rem; color: var(--accent-gold); letter-spacing: 4px; text-transform: uppercase; text-align: center; margin-bottom: 30px; }
+        .timeline-item { display: grid; grid-template-columns: 100px 1fr; gap: 20px; padding: 20px 0; border-left: 2px solid var(--border-color); padding-left: 20px; margin-left: 50px; position: relative; }
+        .timeline-item::before { content: ''; position: absolute; left: -6px; top: 24px; width: 10px; height: 10px; background: var(--accent-gold); border-radius: 50%; }
+        .timeline-year { font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 900; color: var(--accent-gold-dim); }
+        .timeline-desc { color: var(--text-primary); }
+        .timeline-desc strong { color: var(--text-bright); }
+        .manifesto { background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card)); border: 1px solid var(--border-color); border-left: 3px solid var(--accent-red); padding: 40px; margin: 40px 0 60px; position: relative; }
+        .manifesto::before { content: '\201C'; font-family: 'Cinzel', serif; font-size: 6rem; color: var(--accent-red); position: absolute; top: -10px; left: 20px; opacity: 0.2; }
+        .manifesto blockquote { font-size: 1.1rem; font-style: italic; color: var(--text-bright); line-height: 1.8; margin-bottom: 12px; }
+        .manifesto cite { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: var(--accent-gold-dim); letter-spacing: 2px; text-transform: uppercase; font-style: normal; }
+        footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 40px 20px; text-align: center; }
+        .footer-symbol { font-size: 1.5rem; color: var(--accent-gold-dim); margin-bottom: 16px; letter-spacing: 8px; }
+        .footer-text { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--text-dim); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
+        .footer-text a { color: var(--accent-gold-dim); text-decoration: none; }
+        .footer-text a:hover { color: var(--accent-gold); }
+        @media (max-width: 768px) {
+            .site-title { font-size: 1.6rem; letter-spacing: 4px; }
+            nav { flex-wrap: wrap; }
+            nav a { padding: 10px 16px; font-size: 0.65rem; }
+            .article-card { grid-template-columns: 1fr; }
+            .article-icon { width: 100%; height: 120px; }
+            .timeline-item { margin-left: 20px; grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="scanlines"></div>
+
+<header>
+    <div class="header-top">
+        <span class="header-symbol">&#9670; &#9671; &#9670;</span>
+        <div class="site-title">The Hidden Curriculum</div>
+        <div class="site-subtitle">Declassifying the physics they erased from your textbooks</div>
+    </div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="hidden-physics.html">Hidden Physics</a>
+        <a href="education-deception.html" class="active">The Deception</a>
+        <a href="forbidden-knowledge.html">Forbidden Knowledge</a>
+        <a href="resources.html">Archives</a>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="page-header">
+        <h1>&#9670; The Education Deception &#9670;</h1>
+        <div class="section-line"></div>
+        <p>How the system was designed to conceal, not educate</p>
+    </div>
+
+    <div class="article-list">
+        <article class="article-card">
+            <div class="article-icon">
+                <svg viewBox="0 0 200 150" fill="none"><rect x="40" y="20" width="120" height="110" stroke="#c9a84c" stroke-width="0.5" fill="none"/><line x1="60" y1="40" x2="140" y2="40" stroke="#c9a84c" stroke-width="0.3"/><line x1="60" y1="60" x2="140" y2="60" stroke="#c9a84c" stroke-width="0.3"/><line x1="60" y1="80" x2="140" y2="80" stroke="#c9a84c" stroke-width="0.3"/></svg>
+                &#9881;
+            </div>
+            <div class="article-body">
+                <span class="tag red">System &bull; Control</span>
+                <h2><a href="#">The Prussian Model: Manufacturing Obedience at Scale</a></h2>
+                <p>In the early 1800s, Prussia developed a compulsory education system with one explicit goal: produce citizens who would obey authority without question. Soldiers, factory workers, bureaucrats — the system was designed for compliance, not critical thinking. After Prussia's military victories, American industrialists imported this model wholesale. Horace Mann traveled to Prussia in 1843 and brought back the blueprint that would become American public education. The timing was not coincidental — the Industrial Revolution needed workers who would follow orders, not question them.</p>
+                <div class="article-meta">11 MIN READ &bull; <a href="#">Read Full Decode &rarr;</a></div>
+            </div>
+        </article>
+
+        <article class="article-card">
+            <div class="article-icon">
+                <svg viewBox="0 0 200 150" fill="none">
+                    <polygon points="100,15 180,75 100,135 20,75" stroke="#c9a84c" stroke-width="0.5" fill="none"/>
+                    <circle cx="100" cy="75" r="20" stroke="#c9a84c" stroke-width="0.3" fill="none"/>
+                </svg>
+                $$
+            </div>
+            <div class="article-body">
+                <span class="tag red">Rockefeller &bull; Funding</span>
+                <h2><a href="#">Rockefeller's General Education Board: The 1913 Letter</a></h2>
+                <p>In the Occasional Letter No. 1 of the General Education Board (1913), funded by John D. Rockefeller, a passage reads: <em>"We shall not try to make these people or any of their children into philosophers or men of learning. The world so far as it is happy has been so because of the obedience of its inhabitants."</em> This is not interpretation. This is their own published document. Rockefeller's board spent over $300 million (in early 1900s dollars) reshaping American education to serve industrial interests.</p>
+                <div class="article-meta">9 MIN READ &bull; <a href="#">Read Full Decode &rarr;</a></div>
+            </div>
+        </article>
+
+        <article class="article-card">
+            <div class="article-icon">
+                <svg viewBox="0 0 200 150" fill="none">
+                    <circle cx="100" cy="75" r="55" stroke="#c9a84c" stroke-width="0.5" fill="none"/>
+                    <path d="M 70 75 L 100 40 L 130 75 L 100 110 Z" stroke="#c9a84c" stroke-width="0.3" fill="none"/>
+                    <circle cx="100" cy="75" r="15" stroke="#c9a84c" stroke-width="0.3" fill="none"/>
+                </svg>
+                &#9670;
+            </div>
+            <div class="article-body">
+                <span class="tag red">Aether &bull; Removal</span>
+                <h2><a href="aether-erased.html">How the Aether Was Removed From Textbooks</a></h2>
+                <p>The removal of the aether from physics education is one of the most consequential acts of scientific censorship in modern history. It was not a natural progression of scientific understanding — it was a deliberate campaign. Through Rockefeller-funded universities, Carnegie-endowed research institutions, and a carefully controlled peer review process, the aether was declared "debunked" and replaced with the abstract notion of "empty space" possessing no physical qualities. The educational infrastructure ensured each new generation learned this revision as gospel.</p>
+                <div class="article-meta">12 MIN READ &bull; <a href="aether-erased.html">Read Full Decode &rarr;</a></div>
+            </div>
+        </article>
+
+        <article class="article-card">
+            <div class="article-icon">
+                <svg viewBox="0 0 200 150" fill="none">
+                    <line x1="30" y1="130" x2="170" y2="130" stroke="#c9a84c" stroke-width="0.3"/>
+                    <line x1="30" y1="130" x2="30" y2="20" stroke="#c9a84c" stroke-width="0.3"/>
+                    <path d="M 50 120 Q 80 40 100 80 Q 130 20 160 60" stroke="#c9a84c" stroke-width="0.5" fill="none"/>
+                </svg>
+                &#9776;
+            </div>
+            <div class="article-body">
+                <span class="tag red">Curriculum &bull; Standardization</span>
+                <h2><a href="#">The Standardized Testing Regime: Measuring Compliance, Not Intelligence</a></h2>
+                <p>SATs, standardized curricula, No Child Left Behind, Common Core — these are not tools of education. They are instruments of homogenization. The purpose of standardized testing is not to measure what a student knows, but to enforce a narrow band of acceptable knowledge. Anything outside the approved curriculum — aether physics, vortex mathematics, non-Newtonian energy models — is filtered out by design. Students who question the textbook are marked wrong. The system rewards memorization and punishes independent thought.</p>
+                <div class="article-meta">8 MIN READ &bull; <a href="#">Read Full Decode &rarr;</a></div>
+            </div>
+        </article>
+
+        <article class="article-card">
+            <div class="article-icon">
+                <svg viewBox="0 0 200 150" fill="none">
+                    <circle cx="60" cy="75" r="35" stroke="#c9a84c" stroke-width="0.5" fill="none"/>
+                    <circle cx="140" cy="75" r="35" stroke="#c9a84c" stroke-width="0.5" fill="none"/>
+                    <line x1="95" y1="55" x2="105" y2="95" stroke="#c9a84c" stroke-width="0.3"/>
+                </svg>
+                &#9830;
+            </div>
+            <div class="article-body">
+                <span class="tag red">Einstein &bull; Paradigm</span>
+                <h2><a href="#">The Einstein Paradigm: Replacing Aether With Empty Space</a></h2>
+                <p>Albert Einstein's 1905 paper on Special Relativity declared the aether "superfluous." What is rarely taught is that Einstein himself reversed course in 1920, stating: <em>"According to the general theory of relativity, space without aether is unthinkable."</em> But by then, the damage was done. Relativity had been elevated to near-biblical status, and the aether — the one concept that could unify gravity, electromagnetism, and the structure of matter — was exiled from academia. The educational system canonized the simplified version and never updated.</p>
+                <div class="article-meta">10 MIN READ &bull; <a href="#">Read Full Decode &rarr;</a></div>
+            </div>
+        </article>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline">
+        <h2>&#9670; Timeline of Control &#9670;</h2>
+        <div class="timeline-item">
+            <div class="timeline-year">1819</div>
+            <div class="timeline-desc"><strong>Prussia implements compulsory education.</strong> Designed explicitly to produce obedient citizens and soldiers. Students grouped by age, subjected to bells, rigid schedules, and obedience training.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">1843</div>
+            <div class="timeline-desc"><strong>Horace Mann visits Prussia.</strong> Brings the Prussian model back to Massachusetts. The blueprint for American public education is imported.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">1887</div>
+            <div class="timeline-desc"><strong>Michelson-Morley experiment.</strong> Detects no aether wind. Not a disproof of aether, but later cited as one. The narrative begins to shift.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">1902</div>
+            <div class="timeline-desc"><strong>General Education Board founded.</strong> Funded by John D. Rockefeller with $180 million. Systematically reshapes American education toward industrial utility.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">1905</div>
+            <div class="timeline-desc"><strong>Einstein publishes Special Relativity.</strong> Declares aether "superfluous." Academic gatekeepers adopt the new paradigm and purge dissent.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">1908</div>
+            <div class="timeline-desc"><strong>Heaviside reduces Maxwell's equations.</strong> The quaternion formulations containing scalar wave solutions are stripped down to vector form. The most important physics is removed.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">1943</div>
+            <div class="timeline-desc"><strong>Tesla dies. Papers seized by US government.</strong> Over 700 patents and decades of research vanish into classified archives. Most are never released.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">2026</div>
+            <div class="timeline-desc"><strong>The curriculum has not changed.</strong> Students still learn that the aether doesn't exist, that Maxwell only had four equations, and that free energy is impossible. The control continues.</div>
+        </div>
+    </div>
+
+    <div class="manifesto">
+        <blockquote>
+            "In our dream, people yield themselves with perfect docility to our molding hands. The present educational conventions fade from their minds... We shall not try to make these people or any of their children into philosophers or men of learning."
+        </blockquote>
+        <cite>&mdash; Frederick T. Gates, General Education Board, Occasional Letter No. 1, 1913</cite>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-symbol">&#9670; &#9671; &#9670; &#9671; &#9670;</div>
+    <div class="footer-text">The Hidden Curriculum &bull; Est. 2026</div>
+    <div class="footer-text" style="margin-top: 12px;"><a href="index.html">Home</a> &bull; <a href="hidden-physics.html">Hidden Physics</a> &bull; <a href="education-deception.html">The Deception</a> &bull; <a href="forbidden-knowledge.html">Forbidden Knowledge</a> &bull; <a href="resources.html">Archives</a></div>
+</footer>
+</body>
+</html>

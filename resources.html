@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARCHIVES — The Hidden Curriculum</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-primary: #0a0a0f; --bg-secondary: #111118; --bg-card: #16161f; --text-primary: #c8c8d0; --text-dim: #6a6a7a; --text-bright: #e8e8f0; --accent-gold: #c9a84c; --accent-gold-dim: #8a6e2f; --accent-red: #8b2020; --border-color: #222233; --glow-gold: rgba(201,168,76,0.15); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Crimson Text', Georgia, serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.8; font-size: 18px; }
+        ::selection { background: var(--accent-gold); color: var(--bg-primary); }
+        .scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px); }
+        header { position: sticky; top: 0; z-index: 100; background: rgba(10,10,15,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); }
+        .header-top { text-align: center; padding: 24px 20px 8px; border-bottom: 1px solid var(--border-color); }
+        .header-symbol { font-size: 2rem; color: var(--accent-gold); display: block; margin-bottom: 8px; letter-spacing: 12px; }
+        .site-title { font-family: 'Cinzel', serif; font-size: 2.4rem; font-weight: 900; color: var(--accent-gold); letter-spacing: 8px; text-transform: uppercase; text-shadow: 0 0 40px rgba(201,168,76,0.3); }
+        .site-subtitle { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: var(--text-dim); letter-spacing: 6px; text-transform: uppercase; margin-top: 4px; }
+        nav { display: flex; justify-content: center; background: var(--bg-secondary); }
+        nav a { font-family: 'Cinzel', serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim); text-decoration: none; padding: 14px 28px; transition: all 0.3s ease; border-bottom: 2px solid transparent; }
+        nav a:hover, nav a.active { color: var(--accent-gold); background: var(--glow-gold); border-bottom-color: var(--accent-gold); }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        .page-header { text-align: center; padding: 60px 0 40px; border-bottom: 1px solid var(--border-color); margin-bottom: 40px; }
+        .page-header h1 { font-family: 'Cinzel', serif; font-size: 2.2rem; font-weight: 900; color: var(--accent-gold); letter-spacing: 6px; text-transform: uppercase; }
+        .page-header .section-line { width: 60px; height: 1px; background: var(--accent-gold); margin: 12px auto; }
+        .page-header p { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: var(--text-dim); letter-spacing: 3px; text-transform: uppercase; }
+        .section-label { font-family: 'Cinzel', serif; font-size: 1.3rem; color: var(--accent-gold); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); }
+        .book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 50px; }
+        .book-card { background: var(--bg-card); border: 1px solid var(--border-color); padding: 24px; transition: all 0.3s ease; }
+        .book-card:hover { border-color: var(--accent-gold-dim); }
+        .book-card h3 { font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 700; color: var(--text-bright); margin-bottom: 4px; }
+        .book-card .author { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--accent-gold-dim); letter-spacing: 1px; margin-bottom: 8px; display: block; }
+        .book-card p { color: var(--text-dim); font-size: 0.9rem; }
+        .book-card .category { font-family: 'Share Tech Mono', monospace; font-size: 0.55rem; color: var(--accent-gold); letter-spacing: 2px; text-transform: uppercase; margin-top: 10px; display: inline-block; border: 1px solid rgba(201,168,76,0.2); padding: 2px 8px; }
+        .link-list { margin-bottom: 50px; }
+        .link-item { padding: 16px 0; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .link-item:hover { padding-left: 8px; transition: padding-left 0.2s; }
+        .link-item h3 { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700; }
+        .link-item h3 a { color: var(--text-bright); text-decoration: none; }
+        .link-item h3 a:hover { color: var(--accent-gold); }
+        .link-item .link-type { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; }
+        .link-item p { color: var(--text-dim); font-size: 0.9rem; margin-top: 4px; }
+        .disclaimer { background: var(--bg-card); border: 1px solid var(--border-color); border-left: 3px solid var(--accent-red); padding: 24px; margin: 40px 0; }
+        .disclaimer h3 { font-family: 'Cinzel', serif; font-size: 0.9rem; color: var(--accent-red); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
+        .disclaimer p { color: var(--text-dim); font-size: 0.9rem; }
+        footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 40px 20px; text-align: center; }
+        .footer-symbol { font-size: 1.5rem; color: var(--accent-gold-dim); margin-bottom: 16px; letter-spacing: 8px; }
+        .footer-text { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--text-dim); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
+        .footer-text a { color: var(--accent-gold-dim); text-decoration: none; }
+        .footer-text a:hover { color: var(--accent-gold); }
+        @media (max-width: 768px) {
+            .site-title { font-size: 1.6rem; letter-spacing: 4px; }
+            nav { flex-wrap: wrap; }
+            nav a { padding: 10px 16px; font-size: 0.65rem; }
+            .book-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="scanlines"></div>
+
+<header>
+    <div class="header-top">
+        <span class="header-symbol">&#9670; &#9671; &#9670;</span>
+        <div class="site-title">The Hidden Curriculum</div>
+        <div class="site-subtitle">Declassifying the physics they erased from your textbooks</div>
+    </div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="hidden-physics.html">Hidden Physics</a>
+        <a href="education-deception.html">The Deception</a>
+        <a href="forbidden-knowledge.html">Forbidden Knowledge</a>
+        <a href="resources.html" class="active">Archives</a>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="page-header">
+        <h1>&#9670; Archives &amp; Resources &#9670;</h1>
+        <div class="section-line"></div>
+        <p>Primary sources for independent research</p>
+    </div>
+
+    <div class="disclaimer">
+        <h3>&#9888; Independent Verification Required</h3>
+        <p>This archive compiles resources from multiple traditions, time periods, and epistemological frameworks. Not all sources agree with each other. Not all claims have been independently verified. The point is not to accept everything — it is to question what you were told was settled. Research. Cross-reference. Think for yourself.</p>
+    </div>
+
+    <div class="section-label">&#9670; Essential Books &#9670;</div>
+
+    <div class="book-grid">
+        <div class="book-card">
+            <h3>The Dynamic Ether of Cosmic Space</h3>
+            <span class="author">James DeMeo, Ph.D. &bull; 2019</span>
+            <p>A comprehensive review of the evidence for a dynamic cosmic ether, correcting what the author calls a major error in modern science. Includes extensive historical and experimental data.</p>
+            <span class="category">Aether &bull; Physics</span>
+        </div>
+
+        <div class="book-card">
+            <h3>Secrets of Cold War Technology</h3>
+            <span class="author">Jerry E. Smith &bull; 2000</span>
+            <p>Documents the history of scalar wave weapons research, Tesla's contributions to military technology, and the suppression of non-Hertzian electromagnetic phenomena.</p>
+            <span class="category">Scalar Waves &bull; Military</span>
+        </div>
+
+        <div class="book-card">
+            <h3>Occult Chemistry</h3>
+            <span class="author">Annie Besant &amp; C.W. Leadbeater &bull; 1908</span>
+            <p>Clairvoyant investigations into the structure of atoms and elements, publishing atomic weights and isotopic configurations years before mainstream science confirmed them.</p>
+            <span class="category">Occult &bull; Elements</span>
+        </div>
+
+        <div class="book-card">
+            <h3>A New Concept of the Universe</h3>
+            <span class="author">Walter Russell &bull; 1953</span>
+            <p>Russell's comprehensive cosmology challenging the Big Bang, presenting the universe as a rhythmic, wave-based system of creating and dissolving matter from light.</p>
+            <span class="category">Cosmology &bull; Wave Theory</span>
+        </div>
+
+        <div class="book-card">
+            <h3>The Suppression of Invention</h3>
+            <span class="author">Jeane Manning &amp; Joel Garbon &bull; 2009</span>
+            <p>Documents dozens of cases where inventors developed breakthrough energy technologies and were suppressed through patent interference, buyouts, or intimidation.</p>
+            <span class="category">Free Energy &bull; Suppression</span>
+        </div>
+
+        <div class="book-card">
+            <h3>The God Code</h3>
+            <span class="author">Gregg Braden &bull; 2004</span>
+            <p>Explores the ancient Hebrew encoding of the chemical elements hydrogen, oxygen, nitrogen, and carbon (YHVH) in sacred texts — suggesting ancient cultures understood atomic structure.</p>
+            <span class="category">Sacred Science &bull; Ancient Knowledge</span>
+        </div>
+
+        <div class="book-card">
+            <h3>Lost Science</h3>
+            <span class="author">Gerry Vassilatos &bull; 1999</span>
+            <p>Chronicles the suppressed work of Tesla, Moray, Rife, Hieronymous, and others — detailing their discoveries and the systematic campaigns to erase them from history.</p>
+            <span class="category">Suppressed Tech &bull; History</span>
+        </div>
+
+        <div class="book-card">
+            <h3>Energy From the Vacuum</h3>
+            <span class="author">Thomas E. Bearden &bull; 2002</span>
+            <p>Lieutenant Colonel Bearden presents a technical case for extracting usable energy from the quantum vacuum, drawing on Maxwell's original quaternion equations and scalar electromagnetics.</p>
+            <span class="category">Zero-Point &bull; Technical</span>
+        </div>
+    </div>
+
+    <div class="section-label">&#9670; Key Concepts &amp; Research &#9670;</div>
+
+    <div class="link-list">
+        <div class="link-item">
+            <div>
+                <h3><a href="aether-erased.html">The Aether &mdash; How It Was Removed From Physics</a></h3>
+                <p>Our comprehensive decode of the aether removal from scientific education and the Rockefeller/Carnegie influence on academic institutions.</p>
+            </div>
+            <span class="link-type">Article</span>
+        </div>
+
+        <div class="link-item">
+            <div>
+                <h3><a href="tesla-suppressed.html">Tesla's Suppressed Inventions</a></h3>
+                <p>The inventions, patents, and papers seized by the US government upon Tesla's death. Wireless energy, scalar waves, and radiant energy.</p>
+            </div>
+            <span class="link-type">Article</span>
+        </div>
+
+        <div class="link-item">
+            <div>
+                <h3><a href="vortex-math.html">Vortex-Based Mathematics</a></h3>
+                <p>Marko Rodin's discovery of the toroidal number pattern underlying all of reality. The 1-2-4-8-7-5 spiral and the governing 3-6-9 circuit.</p>
+            </div>
+            <span class="link-type">Article</span>
+        </div>
+
+        <div class="link-item">
+            <div>
+                <h3><a href="education-deception.html">The Prussian Education Model</a></h3>
+                <p>The origin story of compulsory education and its deliberate design for obedience manufacturing rather than critical thinking.</p>
+            </div>
+            <span class="link-type">Article</span>
+        </div>
+
+        <div class="link-item">
+            <div>
+                <h3><a href="forbidden-knowledge.html">Forbidden Knowledge: Suppressed Minds</a></h3>
+                <p>Profiles of Tesla, Russell, Schauberger, Rife, Rodin, and Reich — and how their work was systematically silenced.</p>
+            </div>
+            <span class="link-type">Article</span>
+        </div>
+    </div>
+
+    <div class="section-label">&#9670; Primary Historical Documents &#9670;</div>
+
+    <div class="link-list">
+        <div class="link-item">
+            <div>
+                <h3>General Education Board &mdash; Occasional Letter No. 1 (1913)</h3>
+                <p>The Rockefeller-funded board's own document stating their intent to create obedient workers, not thinkers. A primary source that speaks for itself.</p>
+            </div>
+            <span class="link-type">Document</span>
+        </div>
+
+        <div class="link-item">
+            <div>
+                <h3>Maxwell's Original Quaternion Equations (1865)</h3>
+                <p>James Clerk Maxwell's original "A Dynamical Theory of the Electromagnetic Field" — written in quaternion form, containing scalar wave solutions later removed by Heaviside.</p>
+            </div>
+            <span class="link-type">Paper</span>
+        </div>
+
+        <div class="link-item">
+            <div>
+                <h3>Tesla's Colorado Springs Notes (1899&ndash;1900)</h3>
+                <p>Tesla's own laboratory notebooks documenting his experiments with wireless energy transmission, standing waves, and resonant circuits at his Colorado Springs laboratory.</p>
+            </div>
+            <span class="link-type">Notebook</span>
+        </div>
+
+        <div class="link-item">
+            <div>
+                <h3>Einstein's 1920 Leiden Address: "Ether and Relativity"</h3>
+                <p>Where Einstein explicitly states that general relativity requires an ether. A lecture rarely cited in physics education, which canonized only his 1905 position.</p>
+            </div>
+            <span class="link-type">Lecture</span>
+        </div>
+
+        <div class="link-item">
+            <div>
+                <h3>Michelson-Morley Experiment (1887)</h3>
+                <p>The original paper. Frequently cited as disproving the aether, but the actual conclusion was far more nuanced. The experiment failed to detect aether <em>drift</em> — a different claim entirely.</p>
+            </div>
+            <span class="link-type">Experiment</span>
+        </div>
+    </div>
+
+    <div class="disclaimer">
+        <h3>&#9670; A Note on Methodology &#9670;</h3>
+        <p>This archive does not claim that every suppressed theory is correct. It claims that the <em>suppression itself</em> is the evidence of something worth investigating. When a system actively prevents inquiry, burns books, seizes papers, and destroys careers — that system is not serving truth. It is serving power. The greatest trick was not hiding the physics. It was making you believe there was nothing to find.</p>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-symbol">&#9670; &#9671; &#9670; &#9671; &#9670;</div>
+    <div class="footer-text">The Hidden Curriculum &bull; Est. 2026</div>
+    <div class="footer-text" style="margin-top: 12px;"><a href="index.html">Home</a> &bull; <a href="hidden-physics.html">Hidden Physics</a> &bull; <a href="education-deception.html">The Deception</a> &bull; <a href="forbidden-knowledge.html">Forbidden Knowledge</a> &bull; <a href="resources.html">Archives</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VORTEX MATHEMATICS — The Hidden Curriculum</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-primary: #0a0a0f; --bg-secondary: #111118; --bg-card: #16161f; --text-primary: #c8c8d0; --text-dim: #6a6a7a; --text-bright: #e8e8f0; --accent-gold: #c9a84c; --accent-gold-dim: #8a6e2f; --accent-red: #8b2020; --border-color: #222233; --glow-gold: rgba(201,168,76,0.15); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Crimson Text', Georgia, serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.8; font-size: 18px; }
+        ::selection { background: var(--accent-gold); color: var(--bg-primary); }
+        .scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px); }
+        header { position: sticky; top: 0; z-index: 100; background: rgba(10,10,15,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); }
+        .header-top { text-align: center; padding: 24px 20px 8px; border-bottom: 1px solid var(--border-color); }
+        .header-symbol { font-size: 2rem; color: var(--accent-gold); display: block; margin-bottom: 8px; letter-spacing: 12px; }
+        .site-title { font-family: 'Cinzel', serif; font-size: 2.4rem; font-weight: 900; color: var(--accent-gold); letter-spacing: 8px; text-transform: uppercase; text-shadow: 0 0 40px rgba(201,168,76,0.3); }
+        .site-subtitle { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: var(--text-dim); letter-spacing: 6px; text-transform: uppercase; margin-top: 4px; }
+        nav { display: flex; justify-content: center; background: var(--bg-secondary); }
+        nav a { font-family: 'Cinzel', serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim); text-decoration: none; padding: 14px 28px; transition: all 0.3s ease; border-bottom: 2px solid transparent; }
+        nav a:hover, nav a.active { color: var(--accent-gold); background: var(--glow-gold); border-bottom-color: var(--accent-gold); }
+        .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+        .article-header { text-align: center; padding: 60px 0 40px; }
+        .article-header .tag { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--accent-gold); letter-spacing: 3px; text-transform: uppercase; background: rgba(201,168,76,0.1); padding: 4px 12px; border: 1px solid rgba(201,168,76,0.2); display: inline-block; margin-bottom: 16px; }
+        .article-header h1 { font-family: 'Cinzel', serif; font-size: 2.2rem; font-weight: 900; color: var(--text-bright); letter-spacing: 3px; margin-bottom: 12px; }
+        .article-header .meta { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--text-dim); letter-spacing: 2px; }
+        .article-body p { margin-bottom: 24px; color: var(--text-primary); }
+        .article-body h2 { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700; color: var(--accent-gold); letter-spacing: 2px; margin: 48px 0 20px; }
+        .article-body h3 { font-family: 'Cinzel', serif; font-size: 1.15rem; font-weight: 700; color: var(--text-bright); margin: 32px 0 12px; }
+        .pull-quote { border-left: 3px solid var(--accent-gold); padding: 20px 24px; margin: 32px 0; background: var(--bg-card); font-style: italic; font-size: 1.1rem; color: var(--text-bright); }
+        .pull-quote cite { display: block; margin-top: 8px; font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--accent-gold-dim); letter-spacing: 2px; text-transform: uppercase; font-style: normal; }
+        .diagram-box { background: var(--bg-card); border: 1px solid var(--border-color); padding: 32px; margin: 32px 0; text-align: center; }
+        .diagram-box .sequence { font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 900; color: var(--accent-gold); letter-spacing: 12px; margin-bottom: 12px; }
+        .diagram-box .label { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--text-dim); letter-spacing: 3px; text-transform: uppercase; }
+        .diagram-box .polarity { font-family: 'Share Tech Mono', monospace; font-size: 0.8rem; color: var(--accent-gold-dim); letter-spacing: 4px; margin-top: 16px; }
+        .article-end { border-top: 1px solid var(--border-color); margin-top: 48px; padding-top: 24px; }
+        .article-end a { color: var(--accent-gold); text-decoration: none; font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; }
+        .article-end a:hover { text-shadow: 0 0 10px rgba(201,168,76,0.5); }
+        footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 40px 20px; text-align: center; }
+        .footer-symbol { font-size: 1.5rem; color: var(--accent-gold-dim); margin-bottom: 16px; letter-spacing: 8px; }
+        .footer-text { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--text-dim); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
+        .footer-text a { color: var(--accent-gold-dim); text-decoration: none; }
+        .footer-text a:hover { color: var(--accent-gold); }
+        @media (max-width: 768px) {
+            .site-title { font-size: 1.6rem; letter-spacing: 4px; }
+            nav { flex-wrap: wrap; }
+            nav a { padding: 10px 16px; font-size: 0.65rem; }
+            .article-header h1 { font-size: 1.5rem; }
+            .diagram-box .sequence { font-size: 1.8rem; letter-spacing: 6px; }
+        }
+    </style>
+</head>
+<body>
+<div class="scanlines"></div>
+
+<header>
+    <div class="header-top">
+        <span class="header-symbol">&#9670; &#9671; &#9670;</span>
+        <div class="site-title">The Hidden Curriculum</div>
+        <div class="site-subtitle">Declassifying the physics they erased from your textbooks</div>
+    </div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="hidden-physics.html" class="active">Hidden Physics</a>
+        <a href="education-deception.html">The Deception</a>
+        <a href="forbidden-knowledge.html">Forbidden Knowledge</a>
+        <a href="resources.html">Archives</a>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="article-header">
+        <span class="tag">Forbidden Math &bull; Decode</span>
+        <h1>Vortex Mathematics:<br>The Hidden Code Beneath Reality</h1>
+        <div class="meta">10 MIN READ &bull; MARCH 2026 &bull; THE HIDDEN CURRICULUM</div>
+    </div>
+
+    <div class="article-body">
+        <p>What if there were a number pattern that mapped the fundamental operating system of the universe — a pattern that describes how energy flows through every atom, every planet, every galaxy — and what if that pattern had been discovered, dismissed, and ignored by mainstream mathematics?</p>
+
+        <p>This is the story of vortex-based mathematics, and the man who uncovered it.</p>
+
+        <h2>&#9670; The Discovery</h2>
+
+        <p>Marko Rodin was not a mathematician. He was not an academic. He was a young man studying the Bah&aacute;'&iacute; faith who began reducing the numerical values of its most sacred name to single digits. Through a process of doubling and reducing by "casting out nines" (digital root), he stumbled upon a sequence that would consume his life.</p>
+
+        <p>Start with 1. Double it. Reduce to a single digit. Repeat:</p>
+
+        <div class="diagram-box">
+            <div class="sequence">1 &rarr; 2 &rarr; 4 &rarr; 8 &rarr; 7 &rarr; 5</div>
+            <div class="label">The doubling circuit &bull; Powers of 2 reduced to digital root</div>
+            <div class="polarity">1 &ndash; 2 &ndash; 4 &nbsp;&nbsp;|&nbsp;&nbsp; 8 &ndash; 7 &ndash; 5</div>
+            <div class="label" style="margin-top: 4px;">Female polarity &nbsp;&bull;&nbsp; Male polarity</div>
+        </div>
+
+        <p>1 doubles to 2. 2 doubles to 4. 4 doubles to 8. 8 doubles to 16 (1+6 = 7). 7 doubles to 14 (1+4 = 5). 5 doubles to 10 (1+0 = 1). The circuit closes. You're back at 1.</p>
+
+        <p>The sequence <strong>1, 2, 4, 8, 7, 5</strong> repeats infinitely. It never breaks. It never deviates. And it forms a perfect figure-eight — a toroid — when mapped onto a circle.</p>
+
+        <p>But notice what's missing: <strong>3, 6, and 9</strong>. They don't appear in the doubling sequence. They exist outside of it. They are something else entirely.</p>
+
+        <h2>&#9670; The Governing Circuit</h2>
+
+        <div class="diagram-box">
+            <div class="sequence" style="color: var(--accent-red);">3 &harr; 6 &harr; 9</div>
+            <div class="label">The Spirit Circuit &bull; Governing Dimension</div>
+        </div>
+
+        <p>When you double 3, you get 6. When you double 6, you get 12 (1+2 = 3). The 3 and 6 oscillate between each other, and 9 stands alone — never changing, always 9. 9 + 9 = 18 (1+8 = 9). 9 doubles to 9. It is the axis. The zero point. The void around which everything revolves.</p>
+
+        <p>Rodin called 3-6-9 the "spirit circuit" — the dimensional boundary between the physical (1-2-4-8-7-5) and the non-physical. Tesla had said it: <em>"If you only knew the magnificence of the 3, 6, and 9, then you would have the key to the universe."</em></p>
+
+        <div class="pull-quote">
+            "The coil is the fundamental structure of the universe. All matter is composed of these spiraling number patterns. Every electron is a toroidal vortex, and its geometry follows this exact mathematical pattern."
+            <cite>&mdash; Marko Rodin</cite>
+        </div>
+
+        <h2>&#9670; The Toroidal Map</h2>
+
+        <p>When Rodin mapped his number sequence onto a torus (a donut shape), something extraordinary happened. The numbers didn't just sit there — they <em>flowed</em>. The 1-2-4-8-7-5 pattern spiraled along the surface of the torus in a path that exactly replicated the magnetic field lines observed in every known physical system:</p>
+
+        <h3>Atoms</h3>
+        <p>Electrons orbit nuclei in toroidal paths. The electron cloud around any atom is not a probability sphere — it is a torus. The Rodin pattern maps the electron's non-decaying spin, something mainstream physics has never explained. Why doesn't the electron radiate away its energy and collapse into the nucleus? Because it follows the vortex pattern — it is self-sustaining.</p>
+
+        <h3>Planets</h3>
+        <p>Earth's magnetic field is a torus. The solar wind flows through it in patterns that match the Rodin number map. The Van Allen radiation belts are organized along these exact geometric lines.</p>
+
+        <h3>Galaxies</h3>
+        <p>Spiral galaxies are toroidal structures viewed from the side. The arms of the Milky Way follow the same doubling pattern, spiraling outward in a logarithmic spiral governed by the same mathematical relationships.</p>
+
+        <h2>&#9670; The Rodin Coil</h2>
+
+        <p>Rodin took his discovery and wound a coil following the toroidal pattern. Standard electromagnetic coils are wound in uniform spirals. The Rodin coil uses a winding pattern that follows the 1-2-4-8-7-5 sequence, creating a topology where the coil's geometry mirrors the toroidal field of the electron itself.</p>
+
+        <p>The results have been documented but remain controversial:</p>
+
+        <p><strong>Over-unity energy output:</strong> Multiple independent tests have shown the Rodin coil producing more energy out than is put in. Standard physics declares this impossible. But standard physics doesn't account for aetheric energy being drawn in through the toroidal geometry.</p>
+
+        <p><strong>Anomalous magnetic fields:</strong> The coil produces magnetic field configurations that don't conform to standard electromagnetic theory. Fields that appear to be self-organizing, self-reinforcing, and following geometric patterns not predicted by Maxwell's (Heaviside) equations.</p>
+
+        <p><strong>Resonance with biological frequencies:</strong> The coil's operating frequencies have been found to match natural biological resonance patterns — the same frequencies used by the body for cellular communication. This is not coincidence. It is the same mathematical language.</p>
+
+        <h2>&#9670; Why It's Not In Your Textbook</h2>
+
+        <p>Vortex mathematics is not taught in any university. It is not mentioned in any textbook. It does not appear in any peer-reviewed journal. Why?</p>
+
+        <p>The answer is the same reason the aether was removed, the same reason Tesla's papers were seized, the same reason Russell was ignored: <strong>vortex mathematics leads directly to free energy</strong>. If the toroidal geometry of energy flow can be mapped mathematically, it can be harnessed. And energy that can be freely harnessed from the aether cannot be metered, taxed, or controlled.</p>
+
+        <p>Marko Rodin has freely shared his discoveries. His work is open-source. And yet no institution has taken it up. No grant has been issued. No professor has been assigned to verify or falsify it. The silence is the answer.</p>
+
+        <p>The curriculum was designed to prevent you from asking these questions. The math they teach you is not wrong — it is <em>incomplete</em>. They gave you the furniture and hid the architecture. They taught you calculus but not the geometry that calculus describes. They showed you equations but not the patterns beneath them.</p>
+
+        <p>The 1-2-4-8-7-5 spiral is still spinning. The 3-6-9 circuit is still governing. The torus is still turning. You just weren't told to look.</p>
+
+        <div class="article-end">
+            <p><a href="hidden-physics.html">&larr; Back to Hidden Physics</a> &nbsp;&bull;&nbsp; <a href="aether-erased.html">Next: How the Aether Was Erased &rarr;</a></p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-symbol">&#9670; &#9671; &#9670; &#9671; &#9670;</div>
+    <div class="footer-text">The Hidden Curriculum &bull; Est. 2026</div>
+    <div class="footer-text" style="margin-top: 12px;"><a href="index.html">Home</a> &bull; <a href="hidden-physics.html">Hidden Physics</a> &bull; <a href="education-deception.html">The Deception</a> &bull; <a href="forbidden-knowledge.html">Forbidden Knowledge</a> &bull; <a href="resources.html">Archives</a></div>
+</footer>
+</body>
+</html>

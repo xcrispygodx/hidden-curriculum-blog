@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HIDDEN PHYSICS — The Hidden Curriculum</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #111118;
+            --bg-card: #16161f;
+            --text-primary: #c8c8d0;
+            --text-dim: #6a6a7a;
+            --text-bright: #e8e8f0;
+            --accent-gold: #c9a84c;
+            --accent-gold-dim: #8a6e2f;
+            --accent-red: #8b2020;
+            --border-color: #222233;
+            --glow-gold: rgba(201, 168, 76, 0.15);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Crimson Text', Georgia, serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 18px;
+        }
+        ::selection { background: var(--accent-gold); color: var(--bg-primary); }
+        .scanlines {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9999;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+        }
+        header {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(10,10,15,0.95); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .header-top {
+            text-align: center; padding: 24px 20px 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .header-symbol { font-size: 2rem; color: var(--accent-gold); display: block; margin-bottom: 8px; letter-spacing: 12px; }
+        .site-title {
+            font-family: 'Cinzel', serif; font-size: 2.4rem; font-weight: 900;
+            color: var(--accent-gold); letter-spacing: 8px; text-transform: uppercase;
+            text-shadow: 0 0 40px rgba(201,168,76,0.3);
+        }
+        .site-subtitle {
+            font-family: 'Share Tech Mono', monospace; font-size: 0.7rem;
+            color: var(--text-dim); letter-spacing: 6px; text-transform: uppercase; margin-top: 4px;
+        }
+        nav { display: flex; justify-content: center; background: var(--bg-secondary); }
+        nav a {
+            font-family: 'Cinzel', serif; font-size: 0.75rem; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim);
+            text-decoration: none; padding: 14px 28px; transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        nav a:hover, nav a.active {
+            color: var(--accent-gold); background: var(--glow-gold); border-bottom-color: var(--accent-gold);
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        .page-header {
+            text-align: center; padding: 60px 0 40px;
+            border-bottom: 1px solid var(--border-color); margin-bottom: 40px;
+        }
+        .page-header h1 {
+            font-family: 'Cinzel', serif; font-size: 2.2rem; font-weight: 900;
+            color: var(--accent-gold); letter-spacing: 6px; text-transform: uppercase;
+        }
+        .page-header .section-line { width: 60px; height: 1px; background: var(--accent-gold); margin: 12px auto; }
+        .page-header p {
+            font-family: 'Share Tech Mono', monospace; font-size: 0.7rem;
+            color: var(--text-dim); letter-spacing: 3px; text-transform: uppercase;
+        }
+        .article-list { margin-bottom: 60px; }
+        .article-card {
+            display: grid; grid-template-columns: 200px 1fr; gap: 24px;
+            padding: 30px 0; border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        .article-card:hover { padding-left: 12px; }
+        .article-icon {
+            width: 200px; height: 150px; display: flex; align-items: center;
+            justify-content: center; border: 1px solid var(--border-color);
+            background: var(--bg-card); font-size: 3rem; color: var(--accent-gold-dim);
+            position: relative; overflow: hidden;
+        }
+        .article-icon svg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.1;
+        }
+        .article-body h2 {
+            font-family: 'Cinzel', serif; font-size: 1.3rem; font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .article-body h2 a { color: var(--text-bright); text-decoration: none; transition: color 0.2s; }
+        .article-body h2 a:hover { color: var(--accent-gold); }
+        .article-body .tag {
+            font-family: 'Share Tech Mono', monospace; font-size: 0.6rem;
+            color: var(--accent-gold); letter-spacing: 2px; text-transform: uppercase;
+            margin-bottom: 8px; display: inline-block;
+        }
+        .article-body p { color: var(--text-dim); margin-bottom: 12px; font-size: 0.95rem; }
+        .article-meta {
+            font-family: 'Share Tech Mono', monospace; font-size: 0.6rem;
+            color: var(--text-dim); letter-spacing: 1px;
+        }
+        .article-meta a { color: var(--accent-gold); text-decoration: none; letter-spacing: 2px; text-transform: uppercase; }
+        .article-meta a:hover { text-shadow: 0 0 10px rgba(201,168,76,0.5); }
+        .manifesto {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+            border: 1px solid var(--border-color); border-left: 3px solid var(--accent-gold);
+            padding: 40px; margin: 40px 0 60px; position: relative;
+        }
+        .manifesto::before {
+            content: '\201C'; font-family: 'Cinzel', serif; font-size: 6rem;
+            color: var(--accent-gold-dim); position: absolute; top: -10px; left: 20px; opacity: 0.3;
+        }
+        .manifesto blockquote { font-size: 1.1rem; font-style: italic; color: var(--text-bright); line-height: 1.8; margin-bottom: 12px; }
+        .manifesto cite {
+            font-family: 'Share Tech Mono', monospace; font-size: 0.7rem;
+            color: var(--accent-gold-dim); letter-spacing: 2px; text-transform: uppercase; font-style: normal;
+        }
+        footer {
+            background: var(--bg-secondary); border-top: 1px solid var(--border-color);
+            padding: 40px 20px; text-align: center;
+        }
+        .footer-symbol { font-size: 1.5rem; color: var(--accent-gold-dim); margin-bottom: 16px; letter-spacing: 8px; }
+        .footer-text {
+            font-family: 'Share Tech Mono', monospace; font-size: 0.65rem;
+            color: var(--text-dim); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px;
+        }
+        .footer-text a { color: var(--accent-gold-dim); text-decoration: none; }
+        .footer-text a:hover { color: var(--accent-gold); }
+        @media (max-width: 768px) {
+            .site-title { font-size: 1.6rem; letter-spacing: 4px; }
+            nav { flex-wrap: wrap; }
+            nav a { padding: 10px 16px; font-size: 0.65rem; }
+            .article-card { grid-template-columns: 1fr; }
+            .article-icon { width: 100%; height: 120px; }
+        }
+    </style>
+</head>
+<body>
+<div class="scanlines"></div>
+
+<header>
+    <div class="header-top">
+        <span class="header-symbol">&#9670; &#9671; &#9670;</span>
+        <div class="site-title">The Hidden Curriculum</div>
+        <div class="site-subtitle">Declassifying the physics they erased from your textbooks</div>
+    </div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="hidden-physics.html" class="active">Hidden Physics</a>
+        <a href="education-deception.html">The Deception</a>
+        <a href="forbidden-knowledge.html">Forbidden Knowledge</a>
+        <a href="resources.html">Archives</a>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="page-header">
+        <h1>&#9670; Hidden Physics &#9670;</h1>
+        <div class="section-line"></div>
+        <p>The science they removed from your curriculum</p>
+    </div>
+
+    <div class="article-list">
+        <article class="article-card">
+            <div class="article-icon">
+                <svg viewBox="0 0 200 150" fill="none"><circle cx="100" cy="75" r="60" stroke="#c9a84c" stroke-width="0.5"/><circle cx="100" cy="75" r="30" stroke="#c9a84c" stroke-width="0.5"/><line x1="100" y1="0" x2="100" y2="150" stroke="#c9a84c" stroke-width="0.3"/></svg>
+                &#8734;
+            </div>
+            <div class="article-body">
+                <span class="tag">Suppressed &bull; Aether</span>
+                <h2><a href="aether-erased.html">The Aether: The Medium That Fills All Space</a></h2>
+                <p>Before Einstein, the luminiferous aether was considered the fundamental substrate of reality. Every electromagnetic wave required a medium — and that medium was the aether. The Michelson-Morley experiment of 1887 is cited as having "disproven" the aether, but this is a distortion. The experiment detected no aether <em>wind</em>, not the absence of aether itself. Modern physics has quietly returned to aether-like concepts under different names: quantum vacuum, zero-point energy field, Higgs field.</p>
+                <div class="article-meta">12 MIN READ &bull; <a href="aether-erased.html">Read Full Decode &rarr;</a></div>
+            </div>
+        </article>
+
+        <article class="article-card">
+            <div class="article-icon">
+                <svg viewBox="0 0 200 150" fill="none"><path d="M 50 75 Q 100 0 150 75 Q 100 150 50 75" stroke="#c9a84c" stroke-width="0.5" fill="none"/></svg>
+                &#9889;
+            </div>
+            <div class="article-body">
+                <span class="tag">Suppressed &bull; Tesla</span>
+                <h2><a href="tesla-suppressed.html">Scalar Waves: The Longitudinal Energy Maxwell Actually Described</a></h2>
+                <p>James Clerk Maxwell's original formulations used quaternions — mathematical objects that inherently contain both transverse and longitudinal wave solutions. When Oliver Heaviside "simplified" Maxwell's equations into vector form, the longitudinal scalar wave component was excised. These scalar waves — traveling along the axis of propagation rather than perpendicular to it — represent a form of energy transmission that is not bound by the inverse-square law.</p>
+                <div class="article-meta">9 MIN READ &bull; <a href="tesla-suppressed.html">Read Full Decode &rarr;</a></div>
+            </div>
+        </article>
+
+        <article class="article-card">
+            <div class="article-icon">
+                <svg viewBox="0 0 200 150" fill="none">
+                    <circle cx="100" cy="75" r="50" stroke="#c9a84c" stroke-width="0.5" fill="none"/>
+                    <circle cx="100" cy="75" r="35" stroke="#c9a84c" stroke-width="0.5" fill="none"/>
+                    <circle cx="100" cy="75" r="20" stroke="#c9a84c" stroke-width="0.5" fill="none"/>
+                    <ellipse cx="100" cy="75" rx="50" ry="20" stroke="#c9a84c" stroke-width="0.3" fill="none"/>
+                    <ellipse cx="100" cy="75" rx="20" ry="50" stroke="#c9a84c" stroke-width="0.3" fill="none"/>
+                </svg>
+                &#8853;
+            </div>
+            <div class="article-body">
+                <span class="tag">Geometry &bull; Toroidal</span>
+                <h2><a href="vortex-math.html">The Rodin Coil: Toroidal Geometry and Free Energy</a></h2>
+                <p>Marko Rodin's coil follows the pattern discovered through vortex-based mathematics — a winding topology that mirrors the toroidal flow of energy through atoms, planets, and galaxies. Anomalies reported include over-unity energy output, magnetic field configurations that defy standard EM theory, and resonance patterns matching natural biological frequencies. The geometry itself is the key.</p>
+                <div class="article-meta">10 MIN READ &bull; <a href="vortex-math.html">Read Full Decode &rarr;</a></div>
+            </div>
+        </article>
+
+        <article class="article-card">
+            <div class="article-icon">
+                <svg viewBox="0 0 200 150" fill="none">
+                    <path d="M 20 130 L 50 50 L 80 100 L 110 30 L 140 90 L 170 20" stroke="#c9a84c" stroke-width="0.5" fill="none"/>
+                </svg>
+                &#9404;
+            </div>
+            <div class="article-body">
+                <span class="tag">Suppressed &bull; Frequency</span>
+                <h2><a href="forbidden-knowledge.html">Zero-Point Energy: The Vacuum Is Not Empty</a></h2>
+                <p>Quantum mechanics itself admits that the vacuum of space seethes with energy — the zero-point energy field. Every cubic centimeter of "empty" space contains more energy than the total mass-energy of the entire observable universe. This is not fringe science; it is predicted by the Standard Model. Yet no textbook presents this as a potential energy source. The question is not whether zero-point energy exists, but why it has been declared untappable.</p>
+                <div class="article-meta">7 MIN READ &bull; <a href="forbidden-knowledge.html">Read Full Decode &rarr;</a></div>
+            </div>
+        </article>
+
+        <article class="article-card">
+            <div class="article-icon">
+                <svg viewBox="0 0 200 150" fill="none">
+                    <line x1="100" y1="0" x2="100" y2="150" stroke="#c9a84c" stroke-width="0.3"/>
+                    <line x1="0" y1="75" x2="200" y2="75" stroke="#c9a84c" stroke-width="0.3"/>
+                    <circle cx="100" cy="75" r="50" stroke="#c9a84c" stroke-width="0.5" fill="none"/>
+                    <circle cx="60" cy="75" r="20" stroke="#c9a84c" stroke-width="0.3" fill="none"/>
+                    <circle cx="140" cy="75" r="20" stroke="#c9a84c" stroke-width="0.3" fill="none"/>
+                </svg>
+                &#9883;
+            </div>
+            <div class="article-body">
+                <span class="tag">Tesla &bull; Wireless</span>
+                <h2><a href="tesla-suppressed.html">Wireless Energy Transmission: Tesla Proved It in 1899</a></h2>
+                <p>At Colorado Springs, Nikola Tesla lit 200 lamps from 26 miles away — without wires. He demonstrated that the Earth itself is a conductor, and that resonant electromagnetic standing waves could carry power around the globe with minimal loss. J.P. Morgan, who had funded Tesla's earlier work, pulled financing when he realized Tesla's Wardenclyffe Tower would provide free energy to the world. You cannot meter what is free.</p>
+                <div class="article-meta">8 MIN READ &bull; <a href="tesla-suppressed.html">Read Full Decode &rarr;</a></div>
+            </div>
+        </article>
+    </div>
+
+    <div class="manifesto">
+        <blockquote>
+            "The physicists have known sin, and this is a knowledge which they cannot lose."
+        </blockquote>
+        <cite>&mdash; J. Robert Oppenheimer, 1965</cite>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-symbol">&#9670; &#9671; &#9670; &#9671; &#9670;</div>
+    <div class="footer-text">The Hidden Curriculum &bull; Est. 2026</div>
+    <div class="footer-text" style="margin-top: 12px;"><a href="index.html">Home</a> &bull; <a href="hidden-physics.html">Hidden Physics</a> &bull; <a href="education-deception.html">The Deception</a> &bull; <a href="forbidden-knowledge.html">Forbidden Knowledge</a> &bull; <a href="resources.html">Archives</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TESLA'S FORBIDDEN PHYSICS — The Hidden Curriculum</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-primary: #0a0a0f; --bg-secondary: #111118; --bg-card: #16161f; --text-primary: #c8c8d0; --text-dim: #6a6a7a; --text-bright: #e8e8f0; --accent-gold: #c9a84c; --accent-gold-dim: #8a6e2f; --accent-red: #8b2020; --border-color: #222233; --glow-gold: rgba(201,168,76,0.15); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Crimson Text', Georgia, serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.8; font-size: 18px; }
+        ::selection { background: var(--accent-gold); color: var(--bg-primary); }
+        .scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px); }
+        header { position: sticky; top: 0; z-index: 100; background: rgba(10,10,15,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); }
+        .header-top { text-align: center; padding: 24px 20px 8px; border-bottom: 1px solid var(--border-color); }
+        .header-symbol { font-size: 2rem; color: var(--accent-gold); display: block; margin-bottom: 8px; letter-spacing: 12px; }
+        .site-title { font-family: 'Cinzel', serif; font-size: 2.4rem; font-weight: 900; color: var(--accent-gold); letter-spacing: 8px; text-transform: uppercase; text-shadow: 0 0 40px rgba(201,168,76,0.3); }
+        .site-subtitle { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: var(--text-dim); letter-spacing: 6px; text-transform: uppercase; margin-top: 4px; }
+        nav { display: flex; justify-content: center; background: var(--bg-secondary); }
+        nav a { font-family: 'Cinzel', serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim); text-decoration: none; padding: 14px 28px; transition: all 0.3s ease; border-bottom: 2px solid transparent; }
+        nav a:hover, nav a.active { color: var(--accent-gold); background: var(--glow-gold); border-bottom-color: var(--accent-gold); }
+        .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+        .article-header { text-align: center; padding: 60px 0 40px; }
+        .article-header .tag { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: #c44; letter-spacing: 3px; text-transform: uppercase; background: rgba(139,32,32,0.15); padding: 4px 12px; border: 1px solid rgba(139,32,32,0.3); display: inline-block; margin-bottom: 16px; }
+        .article-header h1 { font-family: 'Cinzel', serif; font-size: 2.2rem; font-weight: 900; color: var(--text-bright); letter-spacing: 3px; margin-bottom: 12px; }
+        .article-header .meta { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--text-dim); letter-spacing: 2px; }
+        .article-body p { margin-bottom: 24px; color: var(--text-primary); }
+        .article-body h2 { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700; color: var(--accent-gold); letter-spacing: 2px; margin: 48px 0 20px; }
+        .article-body h3 { font-family: 'Cinzel', serif; font-size: 1.15rem; font-weight: 700; color: var(--text-bright); margin: 32px 0 12px; }
+        .pull-quote { border-left: 3px solid var(--accent-gold); padding: 20px 24px; margin: 32px 0; background: var(--bg-card); font-style: italic; font-size: 1.1rem; color: var(--text-bright); }
+        .pull-quote cite { display: block; margin-top: 8px; font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--accent-gold-dim); letter-spacing: 2px; text-transform: uppercase; font-style: normal; }
+        .fact-box { background: var(--bg-card); border: 1px solid var(--border-color); border-left: 3px solid var(--accent-red); padding: 24px; margin: 32px 0; }
+        .fact-box h4 { font-family: 'Cinzel', serif; font-size: 0.9rem; color: var(--accent-red); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; }
+        .fact-box ul { list-style: none; padding-left: 0; }
+        .fact-box ul li { padding: 6px 0; color: var(--text-dim); font-size: 0.95rem; }
+        .fact-box ul li::before { content: '\25C6 '; color: var(--accent-red); font-size: 0.7rem; }
+        .article-end { border-top: 1px solid var(--border-color); margin-top: 48px; padding-top: 24px; }
+        .article-end a { color: var(--accent-gold); text-decoration: none; font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; }
+        .article-end a:hover { text-shadow: 0 0 10px rgba(201,168,76,0.5); }
+        footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 40px 20px; text-align: center; }
+        .footer-symbol { font-size: 1.5rem; color: var(--accent-gold-dim); margin-bottom: 16px; letter-spacing: 8px; }
+        .footer-text { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--text-dim); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
+        .footer-text a { color: var(--accent-gold-dim); text-decoration: none; }
+        .footer-text a:hover { color: var(--accent-gold); }
+        @media (max-width: 768px) {
+            .site-title { font-size: 1.6rem; letter-spacing: 4px; }
+            nav { flex-wrap: wrap; }
+            nav a { padding: 10px 16px; font-size: 0.65rem; }
+            .article-header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="scanlines"></div>
+
+<header>
+    <div class="header-top">
+        <span class="header-symbol">&#9670; &#9671; &#9670;</span>
+        <div class="site-title">The Hidden Curriculum</div>
+        <div class="site-subtitle">Declassifying the physics they erased from your textbooks</div>
+    </div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="hidden-physics.html" class="active">Hidden Physics</a>
+        <a href="education-deception.html">The Deception</a>
+        <a href="forbidden-knowledge.html">Forbidden Knowledge</a>
+        <a href="resources.html">Archives</a>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="article-header">
+        <span class="tag">Classified &bull; Suppressed Tech</span>
+        <h1>Tesla's Forbidden Physics:<br>The Inventions They Buried</h1>
+        <div class="meta">8 MIN READ &bull; MARCH 2026 &bull; THE HIDDEN CURRICULUM</div>
+    </div>
+
+    <div class="article-body">
+        <p>On January 7, 1943, Nikola Tesla died alone in Room 3327 of the New Yorker Hotel. He was 86 years old. Within hours, agents of the US Alien Property Office entered his room and seized every document, notebook, and piece of correspondence they could find. The man who gave the world alternating current, radio, and the rotating magnetic field died in poverty — and the most important of his discoveries were confiscated by the state.</p>
+
+        <p>This is not conspiracy theory. This is documented history. And the physics that Tesla demonstrated — physics that your textbooks tell you is impossible — remains classified.</p>
+
+        <h2>&#9670; The Colorado Springs Experiments</h2>
+
+        <p>In 1899, Tesla moved to Colorado Springs and built a laboratory with a 142-foot transmission tower. Over the next several months, he conducted experiments that should have changed the course of human civilization. Instead, they were buried.</p>
+
+        <p>Tesla discovered that the Earth itself is a resonant conductor. He found its fundamental frequency — approximately 7.83 Hz, what we now call the Schumann resonance — and demonstrated that electromagnetic standing waves could propagate through the Earth with almost no energy loss.</p>
+
+        <h3>Wireless Energy Transmission</h3>
+
+        <p>On June 15, 1902, Tesla wrote to his investor J.P. Morgan: <em>"I have contrived a plan which I can use in connection with my magnifying transmitter to transmit energy in unlimited quantities to any distance without the slightest loss."</em></p>
+
+        <p>At Colorado Springs, Tesla lit 200 incandescent lamps from a distance of 26 miles — without wires. He generated artificial lightning bolts of 135 feet — longer than any natural lightning bolt ever recorded. He demonstrated that electrical energy could be transmitted through the Earth itself, with the planet acting as a conductor and the atmosphere as the return path.</p>
+
+        <div class="pull-quote">
+            "Electric power is everywhere present in unlimited quantities and can drive the world's machinery without the need of coal, oil, gas, or any other fuel."
+            <cite>&mdash; Nikola Tesla, 1899</cite>
+        </div>
+
+        <h2>&#9670; Wardenclyffe: The Tower That Could Have Changed Everything</h2>
+
+        <p>With Morgan's funding, Tesla began constructing Wardenclyffe Tower on Long Island — a 187-foot structure designed to be the world's first wireless power and communications station. The tower was not just a radio transmitter. It was a global energy distribution system.</p>
+
+        <p>When Morgan realized the full implications — that energy would be transmitted freely to anyone, anywhere, with no way to meter or charge for it — he pulled his funding. The famous exchange attributed to Morgan: <em>"If anyone can draw on the power, where do we put the meter?"</em></p>
+
+        <p>Wardenclyffe was never completed. It was demolished in 1917 for scrap to pay debts. The technology was never rebuilt. Not because it didn't work — but because it worked too well.</p>
+
+        <h2>&#9670; The Seizure of 1943</h2>
+
+        <div class="fact-box">
+            <h4>&#9888; Documented Facts</h4>
+            <ul>
+                <li>Upon Tesla's death, the Alien Property Office seized his papers under the Trading with the Enemy Act.</li>
+                <li>The papers were examined by Dr. John G. Trump (MIT), uncle of Donald Trump, who declared them of "no practical importance."</li>
+                <li>Despite being "unimportant," the papers were classified and never fully released to the public.</li>
+                <li>The FBI maintained a classified file on Tesla that remains partially redacted to this day.</li>
+                <li>Yugoslavia (Tesla's birthplace) fought for decades to recover his papers, receiving only a portion.</li>
+                <li>Key documents related to "death ray" and beam weapon technology remain classified under national security exceptions.</li>
+            </ul>
+        </div>
+
+        <p>Consider the contradiction: the US government seized the papers of a dead scientist, had them examined, declared them unimportant, classified them, and refused to release them. If they were truly unimportant, why classify them? The answer is obvious — they contained physics that was too dangerous, too disruptive, or too valuable to let the world see.</p>
+
+        <h2>&#9670; The Physics They Don't Want You to Know</h2>
+
+        <h3>Radiant Energy</h3>
+        <p>Tesla described a form of energy he called "radiant energy" — distinct from conventional electromagnetic radiation. He described it as a longitudinal wave (not transverse like Hertzian waves) that could propagate through the Earth with minimal loss and could be collected by elevated plates with sharp points. This is exactly the scalar wave physics that was removed from Maxwell's equations by Heaviside.</p>
+
+        <h3>The Magnifying Transmitter</h3>
+        <p>Beyond the standard Tesla coil, Tesla developed what he called the "magnifying transmitter" — a device that could accumulate energy in the Earth-ionosphere cavity and release it as a focused pulse. The device didn't just transmit energy — it resonated with the Earth's own electromagnetic field, creating a feedback loop that amplified the signal without additional input. This is the physics of sympathetic vibration — and it has no explanation in the Heaviside version of Maxwell's equations.</p>
+
+        <h3>Standing Waves and Earth Resonance</h3>
+        <p>Tesla discovered that the Earth resonates at specific frequencies, and that by matching those frequencies, energy could be stored in the Earth-ionosphere waveguide. He described standing waves circling the entire globe with almost no attenuation. Modern science has confirmed the Schumann resonances at 7.83, 14.3, 20.8, 27.3, and 33.8 Hz — exactly as Tesla described. But the implications — that this resonance can be used for wireless energy transmission — remain taboo.</p>
+
+        <h2>&#9670; The Pattern of Suppression</h2>
+
+        <p>Tesla is not an isolated case. He is the most prominent figure in a pattern that has repeated throughout modern history:</p>
+
+        <p><strong>T. Henry Moray</strong> demonstrated a device in the 1920s that collected "radiant energy" from the vacuum and produced 50,000 watts. His laboratory was ransacked and his device destroyed.</p>
+
+        <p><strong>Edwin Gray Sr.</strong> developed an "cold electricity" motor in the 1970s that ran on pulsed energy with no conventional fuel. His prototypes were seized and his partner was murdered.</p>
+
+        <p><strong>Stanley Meyer</strong> invented a water fuel cell that allegedly split water into hydrogen and oxygen using less energy than conventional electrolysis. He died suddenly in 1998 after a meeting with investors. His last words: <em>"They poisoned me."</em></p>
+
+        <p>The pattern is consistent: demonstrate free energy, and you will be silenced — by buyout, by legal action, or by death. The system does not debate these inventions on their merits. It eliminates them.</p>
+
+        <div class="pull-quote">
+            "The present is theirs; the future, for which I really worked, is mine."
+            <cite>&mdash; Nikola Tesla</cite>
+        </div>
+
+        <p>Tesla's future is still waiting. The physics he demonstrated at Colorado Springs, the energy he transmitted across 26 miles of open air, the magnifying transmitter that could power the world — all of it remains possible. The laws of physics haven't changed. Only the curriculum has.</p>
+
+        <div class="article-end">
+            <p><a href="hidden-physics.html">&larr; Back to Hidden Physics</a> &nbsp;&bull;&nbsp; <a href="vortex-math.html">Next: Vortex Mathematics &rarr;</a></p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-symbol">&#9670; &#9671; &#9670; &#9671; &#9670;</div>
+    <div class="footer-text">The Hidden Curriculum &bull; Est. 2026</div>
+    <div class="footer-text" style="margin-top: 12px;"><a href="index.html">Home</a> &bull; <a href="hidden-physics.html">Hidden Physics</a> &bull; <a href="education-deception.html">The Deception</a> &bull; <a href="forbidden-knowledge.html">Forbidden Knowledge</a> &bull; <a href="resources.html">Archives</a></div>
+</footer>
+</body>
+</html>
