@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIMELINE — The Hidden Curriculum</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .timeline-page { position: relative; padding: 60px 0 80px; }
+        .timeline-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, var(--accent-cyan-dim), var(--accent-violet-dim), transparent);
+        }
+        .tl-era {
+            text-align: center;
+            margin: 60px 0 40px;
+            position: relative;
+        }
+        .tl-era h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            background: var(--gradient-cyan);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            display: inline-block;
+            padding: 0 24px;
+            background-color: var(--bg-primary);
+            position: relative;
+            z-index: 2;
+        }
+        .tl-entry {
+            display: grid;
+            grid-template-columns: 1fr 60px 1fr;
+            gap: 0;
+            align-items: start;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .tl-entry:nth-child(odd) .tl-content { grid-column: 1; text-align: right; padding-right: 20px; }
+        .tl-entry:nth-child(odd) .tl-dot { grid-column: 2; }
+        .tl-entry:nth-child(odd) .tl-spacer { grid-column: 3; }
+        .tl-entry:nth-child(even) .tl-spacer { grid-column: 1; }
+        .tl-entry:nth-child(even) .tl-dot { grid-column: 2; }
+        .tl-entry:nth-child(even) .tl-content { grid-column: 3; text-align: left; padding-left: 20px; }
+        .tl-dot {
+            width: 14px;
+            height: 14px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            margin: 6px auto 0;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 0 12px rgba(0, 212, 255, 0.4);
+            transition: all var(--transition-normal);
+        }
+        .tl-entry:hover .tl-dot {
+            transform: scale(1.5);
+            box-shadow: 0 0 24px rgba(0, 212, 255, 0.7);
+        }
+        .tl-dot.red { background: var(--accent-red); box-shadow: 0 0 12px rgba(255, 71, 87, 0.4); }
+        .tl-entry:hover .tl-dot.red { box-shadow: 0 0 24px rgba(255, 71, 87, 0.7); }
+        .tl-dot.violet { background: var(--accent-violet); box-shadow: 0 0 12px rgba(123, 92, 255, 0.4); }
+        .tl-entry:hover .tl-dot.violet { box-shadow: 0 0 24px rgba(123, 92, 255, 0.7); }
+        .tl-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 16px 20px;
+            border-radius: var(--radius);
+            transition: all var(--transition-normal);
+        }
+        .tl-content:hover {
+            border-color: var(--border-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-card);
+        }
+        .tl-year {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            font-weight: 900;
+            background: var(--gradient-cyan);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .tl-content p {
+            font-size: 0.88rem;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        .tl-content a {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.62rem;
+            color: var(--accent-cyan);
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+        .tl-content a:hover { text-shadow: 0 0 12px rgba(0, 212, 255, 0.4); }
+        .tl-tag {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 2px 6px;
+            border-radius: 2px;
+            display: inline-block;
+            margin-bottom: 6px;
+        }
+        .tl-tag.classified { color: var(--accent-red); background: rgba(255,71,87,0.08); border: 1px solid rgba(255,71,87,0.2); }
+        .tl-tag.ancient { color: var(--accent-violet); background: rgba(123,92,255,0.08); border: 1px solid rgba(123,92,255,0.2); }
+        .tl-tag.control { color: var(--accent-cyan); background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.15); }
+        .tl-tag.science { color: var(--accent-green); background: rgba(0,230,118,0.08); border: 1px solid rgba(0,230,118,0.2); }
+        @media (max-width: 768px) {
+            .timeline-page::before { left: 20px; }
+            .tl-entry { grid-template-columns: 40px 1fr; }
+            .tl-entry:nth-child(odd) .tl-content,
+            .tl-entry:nth-child(even) .tl-content { grid-column: 2; text-align: left; padding-left: 16px; padding-right: 0; }
+            .tl-entry:nth-child(odd) .tl-dot,
+            .tl-entry:nth-child(even) .tl-dot { grid-column: 1; }
+            .tl-spacer { display: none; }
+        }
+    </style>
+</head>
+<body>
+<div class="scroll-progress" id="scrollProgress"></div>
+<div class="scanlines"></div>
+
+<header>
+    <div class="header-top">
+        <span class="header-symbol">&#9670; &#9671; &#9670;</span>
+        <div class="site-title">The Hidden Curriculum</div>
+        <div class="site-subtitle">Declassifying the physics they erased from your textbooks</div>
+    </div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="hidden-physics.html">Hidden Physics</a>
+        <a href="education-deception.html">The Deception</a>
+        <a href="forbidden-knowledge.html">Forbidden Knowledge</a>
+        <a href="timeline.html" class="active">Timeline</a>
+        <a href="resources.html">Archives</a>
+    </nav>
+</header>
+
+<div class="container-narrow">
+    <div class="page-header">
+        <h1>The Chronological Thread</h1>
+        <div class="section-line"></div>
+        <p>Every event, every cover-up, every suppression — in order</p>
+    </div>
+
+    <div class="timeline-page">
+
+        <!-- ANCIENT ERA -->
+        <div class="tl-era"><h2>&#9670; Ancient Era &#9670;</h2></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag ancient">Ancient</span><span class="tl-year">c. 2560 BCE</span><p>Great Pyramid of Giza completed. Encodes phi (slant height to half-base = 1.618) and pi (perimeter to height = 2π). No accepted explanation for how 2.3 million blocks were quarried, transported, and placed.</p><a href="ancient-megaliths.html">→ Ancient Megaliths</a></div><div class="tl-dot ancient"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot ancient"></div><div class="tl-content"><span class="tl-tag ancient">Ancient</span><span class="tl-year">c. 1400 BCE</span><p>Ark of the Covenant constructed per Exodus 25 — acacia wood overlaid with gold inside and out. Capacitor-like construction. Described as killing those who touched it improperly.</p><a href="ark-covenant.html">→ The Golden Capacitor</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag ancient">Ancient</span><span class="tl-year">c. 1500 BCE</span><p>Vedic Soma ritual begins. Rigveda contains 100+ hymns describing a plant with no roots, leaves, blossoms, or seeds — consistent with a mushroom. The longest-running entheogenic tradition.</p><a href="sacred-code.html">→ Sacred Code</a></div><div class="tl-dot ancient"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot ancient"></div><div class="tl-content"><span class="tl-tag ancient">Ancient</span><span class="tl-year">500 BCE – 500 CE</span><p>Nazca Lines created in Peru. 800+ lines, 300+ geometric figures, 70+ biomorphs visible only from the air. AI discoveries in 2024 found 303 additional geoglyphs.</p><a href="nazca-lines.html">→ Drawn for the Sky</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag ancient">Ancient</span><span class="tl-year">c. 536–600 CE</span><p>Puma Punku constructed in Bolivia. H-shaped andesite blocks with precision cuts, interlocking modular design, no mortar. Blocks up to 130 tons at 3,850m elevation.</p><a href="ancient-megaliths.html">→ Ancient Megaliths</a></div><div class="tl-dot ancient"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot ancient"></div><div class="tl-content"><span class="tl-tag ancient">Ancient</span><span class="tl-year">402 CE</span><p>Iron Pillar of Delhi erected. Rust-resistant for 1,600+ years. High phosphorus content creates protective phosphate film — technique not formally understood until 21st century.</p><a href="ancient-megaliths.html">→ Ancient Megaliths</a></div></div>
+
+        <!-- MEDIEVAL ERA -->
+        <div class="tl-era"><h2>&#9670; Medieval & Renaissance &#9670;</h2></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag ancient">Ancient</span><span class="tl-year">c. 1119</span><p>Knights Templar founded. Mission to protect pilgrims — but some theorize they discovered the Ark of the Covenant beneath the Temple Mount in Jerusalem.</p><a href="ark-covenant.html">→ The Golden Capacitor</a></div><div class="tl-dot ancient"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot"></div><div class="tl-content"><span class="tl-tag control">Control</span><span class="tl-year">1527</span><p>Albrecht Dürer publishes treatise on star fort fortifications. The trace italienne design spreads worldwide through military engineering — explaining the global distribution of star forts.</p><a href="tartaria-reset.html">→ The Mud Flood</a></div></div>
+
+        <!-- INDUSTRIAL ERA -->
+        <div class="tl-era"><h2>&#9670; Industrial & Modern &#9670;</h2></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag control">Control</span><span class="tl-year">1870</span><p>John D. Rockefeller founds Standard Oil. By 1880 controls 90% of US refining. Creates template for modern petroleum industry through monopoly practices.</p><a href="petrodollar-world.html">→ Petrodollar Curse</a></div><div class="tl-dot"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot"></div><div class="tl-content"><span class="tl-tag control">Control</span><span class="tl-year">1872</span><p>Bohemian Grove founded. Annual two-week July retreat in Monte Rio, California. "Cremation of Care" ceremony at the owl shrine. Presidents, generals, and CEOs attend in secrecy.</p><a href="bohemian-grove.html">→ The Owl in the Woods</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag control">Control</span><span class="tl-year">1887</span><p>Michelson-Morley experiment fails to detect Earth's motion through the aether. Later used to "disprove" the aether — though the experiment's own designers disagreed with this interpretation.</p><a href="aether-erased.html">→ How the Aether Was Erased</a></div><div class="tl-dot red"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot red"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1901</span><p>J.P. Morgan funds Tesla's Wardenclyffe Tower ($150,000). When Tesla reveals it's for wireless power (not just telegraphy), Morgan cuts funding July 1903: "I should not feel disposed at present to make any further advances."</p><a href="tesla-suppressed.html">→ Tesla's Forbidden Physics</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1902</span><p>Rockefeller establishes General Education Board with $180 million ($5B+ today). Funds university curricula emphasizing vocational training. Shapes which physics gets taught.</p><a href="aether-erased.html">→ How the Aether Was Erased</a></div><div class="tl-dot red"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot red"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1905</span><p>Einstein publishes Special Relativity. Eliminates the need for aether as a concept. Aether physics begins to be marginalized — precisely during Rockefeller/Carnegie education reshaping.</p><a href="aether-erased.html">→ How the Aether Was Erased</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag control">Control</span><span class="tl-year">1910</span><p>November: Aldrich, Warburg, Vanderlip, Davison, Strong, Norton meet secretly at Jekyll Island to design what becomes the Federal Reserve.</p><a href="federal-reserve.html">→ Creature from Jekyll Island</a></div><div class="tl-dot"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot"></div><div class="tl-content"><span class="tl-tag control">Control</span><span class="tl-year">1911</span><p>Supreme Court breaks up Standard Oil into 34 companies. Rockefeller retains stock. Creates Exxon, Mobil, Chevron, Amoco, BP precursors.</p><a href="petrodollar-world.html">→ Petrodollar Curse</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag control">Control</span><span class="tl-year">1913</span><p>December 23: Federal Reserve Act passes during Christmas recess. 16th Amendment (income tax) ratified same year. Both create the financial infrastructure for the modern control system.</p><a href="federal-reserve.html">→ Creature from Jekyll Island</a></div><div class="tl-dot red"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot"></div><div class="tl-content"><span class="tl-tag control">Control</span><span class="tl-year">1921</span><p>Council on Foreign Relations (CFR) founded with Carnegie, Rockefeller, J.P. Morgan funding. Every Secretary of State since the 1940s has been a CFR member.</p><a href="bilderberg-group.html">→ The Shadow Cabinet</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1921</span><p>Thomas Midgley Jr. discovers tetraethyl lead eliminates engine knock. Workers develop lead poisoning same year. Begins 72-year cover-up of leaded gasoline.</p><a href="oil-paradox.html">→ The Addiction Engine</a></div><div class="tl-dot red"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot"></div><div class="tl-content"><span class="tl-tag control">Control</span><span class="tl-year">1924</span><p>Phoebus Cartel: GE, Philips, Osram agree to 1,000-hour maximum bulb lifespan. Bulbs that lasted 2,500+ hours are deliberately limited. Birth of planned obsolescence.</p><a href="oil-paradox.html">→ The Addiction Engine</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag science">Science</span><span class="tl-year">1926</span><p>Heinrich Klüver identifies form constants — four geometric pattern classes (tunnels, spirals, lattices, cobwebs) common to all psychedelic experiences. The visual cortex generates sacred geometry.</p><a href="sacred-code.html">→ Sacred Code</a></div><div class="tl-dot violet"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot red"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1932</span><p>Skull and Bones expands at Yale with Russell Trust Association. The "322" logo. 15 seniors tapped per year. The Tomb — windowless building on campus.</p><a href="skull-bones.html">→ 322: Skull and Bones</a></div></div>
+
+        <!-- WWII ERA -->
+        <div class="tl-era"><h2>&#9670; World War II & Aftermath &#9670;</h2></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1945</span><p>July 20: Operation Paperclip begins. 1,600+ Nazi scientists recruited. Von Braun (SS officer, V-2 slave labor) → NASA. Schreiber (Nazi Surgeon General, approved Auschwitz experiments) → MKULTRA advisor.</p><a href="operation-paperclip.html">→ The Nazi Pipeline</a></div><div class="tl-dot red"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot red"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1947</span><p>Oscar Ewing (Alcoa's lawyer) becomes head of US Public Health Service. Begins promoting fluoride in water — aluminum industry waste disposal disguised as public health.</p><a href="fluoride-history.html">→ The Waste in Your Water</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1950</span><p>Project Bluebird established — CIA's first mind control program. Renamed Artichoke (1951), then MKULTRA (1953). 149 subprojects, 80+ institutions.</p><a href="mkultra.html">→ Poisoner in Chief</a></div><div class="tl-dot red"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot red"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1950s</span><p>Operation Gladio established. CIA/MI6 fund secret stay-behind armies across 16+ Western European nations. Recruit former Nazis. "Strategy of tension" begins.</p><a href="operation-gladio.html">→ Strategy of Tension</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1953</span><p>April 13: Allen Dulles establishes MKULTRA. Sidney Gottlieb directs. CIA purchases entire world supply of LSD from Sandoz ($240,000). Operation Midnight Climax begins — CIA brothels in San Francisco.</p><a href="mkultra.html">→ Poisoner in Chief</a></div><div class="tl-dot red"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot red"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1953</span><p>November 18: Frank Olson covertly dosed with LSD by CIA supervisor. November 27: Olson dead from 13th-floor window. Ruled suicide. Family contested. 1994 autopsy found injuries inconsistent with fall.</p><a href="mkultra.html">→ Poisoner in Chief</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag control">Control</span><span class="tl-year">1954</span><p>Bilderberg Group founded by Prince Bernhard at Hotel de Bilderberg, Oosterbeek. ~130 political/economic elites meet annually. No public records.</p><a href="bilderberg-group.html">→ The Shadow Cabinet</a></div><div class="tl-dot"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot red"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1956</span><p>COINTELPRO begins. FBI's program to "expose, disrupt, misdirect, discredit, or otherwise neutralize" targets. Targets Communist Party, then expands to civil rights, antiwar, socialist movements.</p><a href="cointelpro.html">→ The Invisible War</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1956</span><p>Federal judge orders destruction of Wilhelm Reich's books and orgone accumulators. FDA literally burns scientific literature about alternative energy. Physical destruction of knowledge.</p><a href="energy-gatekeeping.html">→ Is Hidden Knowledge Only Hidden for Energy?</a></div><div class="tl-dot red"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot red"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1957</span><p>Dr. Ewen Cameron begins Subproject 68 at McGill University. "Psychic driving" — continuous message playback to comatose patients. "Depatterning" — ECT at 30-40x normal power. Cameron is president of THREE psychiatric associations while running CIA torture experiments.</p><a href="mkultra.html">→ Poisoner in Chief</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag control">Control</span><span class="tl-year">1958</span><p>Tupper fires Brownie Wise — the woman who built Tupperware. Later same year sells company to Rexall for $16M. Wise gets $30,000. Tupper renounces US citizenship, flees to Costa Rica.</p><a href="tupperware.html">→ The Burping Seal</a></div><div class="tl-dot"></div><div class="tl-spacer"></div></div>
+
+        <!-- COLD WAR ERA -->
+        <div class="tl-era"><h2>&#9670; Cold War & Awakening &#9670;</h2></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot red"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1961</span><p>Eisenhower warns of "military-industrial complex" in farewell address. One of the last warnings from within the system before the apparatus became self-sustaining.</p><a href="defense-corruption.html">→ Pentagon's Black Book</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1963</span><p>June 4: JFK signs Executive Order 11110 — authorizes silver certificates backed by silver bullion, bypassing the Federal Reserve. November 22: JFK assassinated in Dallas.</p><a href="jfk-assassination.html">→ Dallas and the Powers He Challenged</a></div><div class="tl-dot red"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot red"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1964</span><p>November 21: FBI sends "suicide letter" to Martin Luther King Jr. with surveillance recordings and instruction: "You better take it before your filthy, abnormal, fraudulent self is bared to the nation." Created days after Nobel Peace Prize announcement.</p><a href="cointelpro.html">→ The Invisible War</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag science">Science</span><span class="tl-year">1965–1969</span><p>Oak Ridge National Laboratory operates Molten Salt Reactor Experiment (MSRE) — thorium reactor runs successfully. Alvin Weinberg fired 1973 for advocating thorium. Uranium chosen for weapons-grade plutonium production.</p><a href="energy-gatekeeping.html">→ Is Hidden Knowledge Only Hidden for Energy?</a></div><div class="tl-dot violet"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot red"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1969</span><p>December 4: Fred Hampton drugged by FBI informant William O'Neal, shot twice in head in bed by Chicago police. Mark Clark also killed. Officers fired ~100 rounds; Panthers fired 1. Hampton was 21 years old.</p><a href="cointelpro.html">→ The Invisible War</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1971</span><p>August 15: Nixon ends gold convertibility. Bretton Woods collapses. Dollar becomes naked fiat. The US needs a new reason for the world to hold dollars.</p><a href="petrodollar-world.html">→ Petrodollar Curse</a></div><div class="tl-dot red"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1971</span><p>March 8: Citizens' Commission burglarizes FBI office in Media, Pennsylvania during Ali-Frazier fight. Stolen documents published by Washington Post. Hoover ends centralized COINTELPRO within the year.</p><a href="cointelpro.html">→ The Invisible War</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1973</span><p>CIA Director Richard Helms orders all MKULTRA records destroyed. Gottlieb drives to records center, shreds seven boxes. ~20,000 documents survive — incorrectly filed in financial records building.</p><a href="mkultra.html">→ Poisoner in Chief</a></div><div class="tl-dot red"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot red"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1973</span><p>Trilateral Commission founded by David Rockefeller and Zbigniew Brzezinski. Coordinates US, Europe, Japan policy. 26 members join Carter administration. The shadow cabinet takes shape.</p><a href="bilderberg-group.html">→ The Shadow Cabinet</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag control">Control</span><span class="tl-year">1974</span><p>June: Henry Kissinger and Saudi Crown Prince Fahd establish US-Saudi Joint Commission. Saudi Arabia agrees to price ALL oil in US dollars. In exchange: military protection and investment in US Treasuries. Classified for 41 years.</p><a href="petrodollar-world.html">→ Petrodollar Curse</a></div><div class="tl-dot red"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot red"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1975</span><p>Church Committee hearings reveal CIA assassination plots, MKULTRA, domestic surveillance. Frank Church: "If this government ever became a tyranny... the technological capacity that the intelligence community has given the government could enable it to impose total tyranny."</p><a href="mkultra.html">→ Poisoner in Chief</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1975</span><p>Italian Prime Minister Aldo Moro's "Historic Compromise" — attempt to include communists in government. Gladio operatives see this as existential threat. Moro kidnapped and killed 1978.</p><a href="operation-gladio.html">→ Strategy of Tension</a></div><div class="tl-dot red"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot red"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1980</span><p>August 2: Bologna train station bombing. 85 killed. Deadliest Italian terrorism. Neo-fascist NAR group. P2 Masonic Lodge connection (Licio Gelli). Gladio-linked explosives.</p><a href="operation-gladio.html">→ Strategy of Tension</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1984–1985</span><p>Jonathan Pollard, US Navy intelligence analyst, spies for Israel. Sentenced to life. Released 2015. Moved to Israel 2020. Netanyahu personally greets him at airport.</p><a href="defense-corruption.html">→ Pentagon's Black Book</a></div><div class="tl-dot red"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot red"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1990</span><p>October 24: Italian PM Andreotti reveals Gladio before parliament. 127 weapons caches dismantled. European Parliament condemns Gladio November 22. NATO acknowledges but maintains operational secrecy.</p><a href="operation-gladio.html">→ Strategy of Tension</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag science">Science</span><span class="tl-year">1990–1995</span><p>Rick Strassman conducts first FDA-approved DMT studies at University of New Mexico. 60+ volunteers report entering hyperdimensional geometric worlds. Over 50% encounter "entities."</p><a href="sacred-code.html">→ Sacred Code</a></div><div class="tl-dot violet"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot red"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">1993</span><p>HAARP established in Gakona, Alaska. DARPA/Air Force/Navy funded. 180 high-frequency transmitters for ionospheric heating. Eastlund's atmospheric modification patents.</p><a href="haarp-weather.html">→ Heating the Sky</a></div></div>
+
+        <!-- MODERN ERA -->
+        <div class="tl-era"><h2>&#9670; The Modern Machine &#9670;</h2></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">2000</span><p>November: Saddam Hussein announces Iraq will sell oil in euros. March 2003: US invades Iraq. Oil reverts to dollars after regime change.</p><a href="petrodollar-world.html">→ Petrodollar Curse</a></div><div class="tl-dot red"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot red"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">2001</span><p>September 10: Rumsfeld announces $2.3 trillion missing from Pentagon. September 11: Plane hits section containing Army financial management offices tracing the money.</p><a href="defense-corruption.html">→ Pentagon's Black Book</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">2001</span><p>Larry Silverstein purchases WTC lease 6 weeks before 9/11. Insures for $3.55B. Claims two attacks (double payout). WTC7 collapses at 5:20 PM — not hit by plane. NIST cites "thermal expansion."</p><a href="defense-corruption.html">→ Pentagon's Black Book</a></div><div class="tl-dot red"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot red"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">2004</span><p>BP hires Ogilvy & Mather. Launches "carbon footprint calculator" — shifts climate responsibility from corporations to individuals. The most successful greenwashing campaign in history.</p><a href="oil-paradox.html">→ The Addiction Engine</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">2005</span><p>AIPAC espionage case: Steve Rosen and Keith Weissman charged for receiving classified information from Pentagon analyst Larry Franklin. The Israel-US intelligence pipeline exposed.</p><a href="defense-corruption.html">→ Pentagon's Black Book</a></div><div class="tl-dot red"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot violet"></div><div class="tl-content"><span class="tl-tag science">Science</span><span class="tl-year">2007</span><p>Dadachova et al. demonstrate radiotrophic fungi at Chernobyl grow 10% faster in radiation. Melanin converts gamma radiation to metabolic energy — "radiosynthesis." Nature's own energy technology.</p><a href="sacred-code.html">→ Sacred Code</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag control">Control</span><span class="tl-year">2008</span><p>Global financial crisis. Federal Reserve banks out Wall Street with $700B TARP. Banks too big to fail. Taxpayers bear the cost. Fed's role in creating the crisis through cheap money.</p><a href="federal-reserve.html">→ Creature from Jekyll Island</a></div><div class="tl-dot"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot red"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">2011</span><p>March–October: NATO destroys Libya. Gaddafi killed. He had proposed a gold-backed African dinar for oil trade. Leaked Blumenthal emails to Clinton cite the gold dinar as motivation.</p><a href="petrodollar-world.html">→ Petrodollar Curse</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag science">Science</span><span class="tl-year">2012</span><p>July 4: CERN announces discovery of Higgs boson — the particle that gives matter mass. The Higgs field permeates all space. Functionally identical to the classical aether concept. The aether returns dressed in new mathematics.</p><a href="cern-portals.html">→ Dancing with Shiva</a></div><div class="tl-dot violet"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot violet"></div><div class="tl-content"><span class="tl-tag science">Science</span><span class="tl-year">2014</span><p>Petri et al. demonstrate psilocybin increases brain connections by ~30%. Brain enters distributed, non-hierarchical state — becomes more like a mycelial network.</p><a href="sacred-code.html">→ Sacred Code</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag control">Control</span><span class="tl-year">2019</span><p>Epstein arrested July 6. Dies August 10 in jail cell. Cameras malfunctioned. Guards fell asleep. Medical examiner rules suicide. Public skepticism massive.</p><a href="maxwell-epstein-web.html">→ Maxwell-Epstein Web</a></div><div class="tl-dot red"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot"></div><div class="tl-content"><span class="tl-tag control">Control</span><span class="tl-year">2020</span><p>June: WEF launches "Great Reset." Klaus Schwab: "The pandemic represents a rare but narrow window of opportunity to reflect, reimagine, and reset our world." Digital ID, CBDC, social credit infrastructure.</p><a href="transhumanism.html">→ You Will Own Nothing</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">2022</span><p>February: Russia invades Ukraine. West freezes ~$300B Russian central bank reserves. Moscow pivots to yuan/ruble oil sales. Accelerates global de-dollarization. The weaponization of dollar reserves triggers the shift.</p><a href="petrodollar-world.html">→ Petrodollar Curse</a></div><div class="tl-dot red"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot red"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">2022</span><p>SEC charges Tupperware for accounting fraud. Fuller Mexico subsidiary fudging sales. $900,000 fine. The empire built by a woman, stolen by a man, crumbles.</p><a href="tupperware.html">→ The Burping Seal</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag science">Science</span><span class="tl-year">2024</span><p>Bradshaw et al. (PNAS): psilocybin mushrooms arose 65 million years ago — coinciding with asteroid impact. Gene cluster transferred horizontally 4-5 times. The fungal archive is older than mammals.</p><a href="sacred-code.html">→ Sacred Code</a></div><div class="tl-dot violet"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot"></div><div class="tl-content"><span class="tl-tag control">Control</span><span class="tl-year">2024</h2><p>June 9: Saudi Arabia lets petrodollar agreement expire without renewal. BRICS expands: Saudi Arabia, UAE, Egypt, Ethiopia, Iran join. The 50-year arrangement ends.</p><a href="petrodollar-world.html">→ Petrodollar Curse</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag control">Control</span><span class="tl-year">2024</span><p>September 17: Tupperware files Chapter 11 bankruptcy. Sold for $23.5M to Party Products LLC. Earl Tupper sold it for $16M in 1958. Brownie Wise died in poverty 1992. The cycle completes.</p><a href="tupperware.html">→ The Burping Seal</a></div><div class="tl-dot"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot violet"></div><div class="tl-content"><span class="tl-tag science">Science</span><span class="tl-year">2025</span><p>February: Nature Medicine publishes landmark study. Human brain tissues contain 0.5% microplastics by weight. Dementia brains have 5-7x more. Concentrations increased 50% from 2016-2024. The petroleum invasion is complete.</p><a href="petroleum.html">→ The Black Mirror</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">2025</span><p>FY2025: 6,543 patent secrecy orders in effect — highest level in decades. DARPA ARRIVE program "complete" — vacuum energy engineering results classified. The patents are still locked.</p><a href="energy-gatekeeping.html">→ Is Hidden Knowledge Only Hidden for Energy?</a></div><div class="tl-dot red"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot red"></div><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">2025–2026</span><p>Epstein DOJ documents released: 3.5 million pages. Nowak placed on leave twice. Summers retires from Harvard. Scientists named. The network exposed — but the system continues.</p><a href="maxwell-epstein-web.html">→ Maxwell-Epstein Web</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag classified">Classified</span><span class="tl-year">2026</span><p>BP ditches renewables. Returns to $10B/year fossil fuel spending. After $200M "Beyond Petroleum" campaign. After decades of greenwashing. The mask drops.</p><a href="oil-paradox.html">→ The Addiction Engine</a></div><div class="tl-dot red"></div><div class="tl-spacer"></div></div>
+
+        <div class="tl-entry"><div class="tl-spacer"></div><div class="tl-dot"></div><div class="tl-content"><span class="tl-tag control">Control</span><span class="tl-year">2026</span><p>Iran imposes yuan-denominated transit tolls at Strait of Hormuz — $2 million per voyage. Brent crude surges. Gold past $4,400. The petrodollar fracture accelerates. The old order trembles.</p><a href="petrodollar-world.html">→ Petrodollar Curse</a></div></div>
+
+        <div class="tl-entry"><div class="tl-content"><span class="tl-tag science">Science</span><span class="tl-year">2026</span><p>February: Scientific Reports publishes Eleusinian Mysteries study. Ergot + lye = psychoactive LSA. The 2,000-year mystery cult's formula — fungal technology — experimentally confirmed. The ancient code was real.</p><a href="sacred-code.html">→ Sacred Code</a></div><div class="tl-dot violet"></div><div class="tl-spacer"></div></div>
+
+    </div>
+</div>
+
+<footer>
+    <div class="footer-symbol">&#9670; &#9671; &#9670; &#9671; &#9670;</div>
+    <div class="footer-text">The Hidden Curriculum &bull; Est. 2026</div>
+    <div class="footer-text" style="margin-top: 12px;"><a href="index.html">Home</a> &bull; <a href="timeline.html">Timeline</a> &bull; <a href="resources.html">Archives</a></div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right, .tl-entry').forEach(el => observer.observe(el));
+
+    const progressBar = document.getElementById('scrollProgress');
+    if (progressBar) {
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            progressBar.style.width = (scrollTop / docHeight) * 100 + '%';
+        });
+    }
+});
+</script>
+</body>
+</html>
